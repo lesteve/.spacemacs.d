@@ -1,3 +1,6 @@
+;; turn on indentation highlighting
+(add-hook 'python-mode-hook #'spacemacs/toggle-highlight-indentation-on)
+
 ;; Use ipython rather than plain python for the python shell
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "-i --simple-prompt --matplotlib")
@@ -17,5 +20,7 @@
 ;; This significantly improves completion in the ipython notebook
 ;; buffers. Otherwise . opens a minibuffer to do the completion which
 ;; is really crap
-(require 'auto-complete-config)
-(ac-config-default)
+;; Disabling this 2018-05-11 because spacemacs uses company (and not
+;; auto-complete) by default
+;; (require 'auto-complete-config)
+;; (ac-config-default)
