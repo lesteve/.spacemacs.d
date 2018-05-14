@@ -5,14 +5,8 @@
 ;; details.
 (with-eval-after-load 'org
 
-  ;; set the org directory to my private copy instead of the one inside
-  ;; the emacs CVS-snapshot
-  ;; (setq load-path (cons "~/.emacs.d/org-mode/lisp" load-path))
-
   (require 'org-install)
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-  (define-key global-map "\C-cl" 'org-store-link)
-  (define-key global-map "\C-ca" 'org-agenda)
 
   (setq org-support-shift-select t)
   (setq org-special-ctrl-k t)
@@ -81,7 +75,6 @@
   ;; remember functionalities (to quickly type notes when they pop out in your mind)
   (setq org-default-notes-file "~/org/notes.org")
   ;;(org-remember-insinuate)
-  (define-key global-map (kbd "C-c c") 'org-capture)
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "SOMEDAY(s)" "STARTED(S!/!)" "WAITING(w/!)" "|" "DONE(d)" "DEFERRED(D@)" "CANCELLED(c@)")))
