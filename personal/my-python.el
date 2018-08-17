@@ -1,6 +1,9 @@
 ;; turn on indentation highlighting
 (add-hook 'python-mode-hook #'spacemacs/toggle-highlight-indentation-on)
 
+;; Add current function to the spaceline
+(add-hook 'python-mode-hook #'which-function-mode)
+
 ;; Use ipython rather than plain python for the python shell
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "-i --simple-prompt --matplotlib")
