@@ -18,6 +18,9 @@
 ;; from the doc
 (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
 
+;; conda environment settings
+(setenv "WORKON_HOME" "/home/lesteve/miniconda3/envs")
+
 ;; Taken from
 ;; https://github.com/millejoh/emacs-ipython-notebook/blob/master/lisp/zeroein.el
 ;; This significantly improves completion in the ipython notebook
