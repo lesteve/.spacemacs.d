@@ -13,7 +13,9 @@
 ;; Disable auto-insertion of matching character in smartparens
 (eval-after-load 'smartparens
   '(progn
-     (sp-pair "(" nil :actions :rem)
-     (sp-pair "[" nil :actions :rem)
-     (sp-pair "'" nil :actions :rem)
-     (sp-pair "\"" nil :actions :rem)))
+     (sp-pair "(" nil :actions '(:rem insert))
+     (sp-pair "[" nil :actions '(:rem insert))
+     (sp-pair "'" nil :actions '(:rem insert))
+     (sp-pair "\"" nil :actions '(:rem insert))
+     )
+  )
