@@ -21,7 +21,7 @@
          )
         ("ymail"
          (mu4e-sent-folder "/ymail/Sent")
-         (mu4e-drafts-folder "/ymail/Drafts")
+         (mu4e-drafts-folder "/ymail/Draft")
          (user-mail-address "loic.esteve@ymail.com")
          (user-full-name "Loïc Estève")
          )
