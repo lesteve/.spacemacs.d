@@ -70,7 +70,7 @@
 
   ;; files included in the agenda
   (setq org-agenda-files
-        (list "~/org/todo.org"))
+        (list "~/org/todo.org" "~/org/zimbra-calendar.org"))
 
   ;; remember functionalities (to quickly type notes when they pop out in your mind)
   (setq org-default-notes-file "~/org/notes.org")
@@ -169,6 +169,15 @@
   (add-hook 'org-shiftleft-final-hook 'windmove-left)
   (add-hook 'org-shiftdown-final-hook 'windmove-down)
   (add-hook 'org-shiftright-final-hook 'windmove-right)
+
+  ;; calendar synchronization
+  (require 'org-caldav)
+
+  (setq org-caldav-url "https://zimbra.inria.fr/dav/lesteve")
+  (setq org-caldav-calendar-id "Calendar")
+  (setq org-caldav-inbox "~/org/zimbra-calendar.org")
+  (setq org-icalendar-timezone "Europe/Paris")
+  (setq org-icalendar-use-deadline '(event-if-todo event-if-not-todo todo-due))
 
   ;; ;; #+LaTeX_CLASS: beamer in org files
   ;; (unless (boundp 'org-export-latex-classes)
