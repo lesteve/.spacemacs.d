@@ -71,3 +71,6 @@
                         (concat "maildir:" (car maildir)))
                       mu4e-maildir-shortcuts) " OR ")
          "All inboxes" ?i)))
+
+;;; Avoid "Maildir error: duplicate UID" errors with mbsync
+(setq mu4e-change-filenames-when-moving t)
