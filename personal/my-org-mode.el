@@ -179,6 +179,9 @@
   (setq org-icalendar-timezone "Europe/Paris")
   (setq org-icalendar-use-deadline '(event-if-todo event-if-not-todo todo-due))
 
+  ;; Content should not be indented when promoting/demoting the header
+  (setq org-adapt-indentation nil)
+
   ;; ;; #+LaTeX_CLASS: beamer in org files
   ;; (unless (boundp 'org-export-latex-classes)
   ;;   (setq org-export-latex-classes nil))
