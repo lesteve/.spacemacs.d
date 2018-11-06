@@ -74,3 +74,9 @@
 
 ;;; Avoid "Maildir error: duplicate UID" errors with mbsync
 (setq mu4e-change-filenames-when-moving t)
+
+;;; Show only interesting folders in main view
+(setq mu4e-maildirs-extension-custom-list
+      '("/inria/Inbox" "/inria/SED" "/inria/Lists/WillowSierra" "/inria/Lists/hpc-big-data"
+        "/ymail/Inbox" "/ymail/github" "/ymail/github/dask" "/ymail/github/scikit-learn"
+        "/gmx/Inbox" "/gmx/Inbox/AhOuhPuc" "/gmx/Inbox/Roc14"))
