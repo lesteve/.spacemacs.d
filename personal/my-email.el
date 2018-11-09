@@ -80,3 +80,6 @@
       '("/inria/Inbox" "/inria/SED" "/inria/Lists/WillowSierra" "/inria/Lists/hpc-big-data"
         "/ymail/Inbox" "/ymail/github" "/ymail/github/dask" "/ymail/github/scikit-learn"
         "/gmx/Inbox" "/gmx/Inbox/AhOuhPuc" "/gmx/Inbox/Roc14"))
+
+;;; Kill message buffer once the message is sent
+(setq message-kill-buffer-on-exit t)
