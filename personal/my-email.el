@@ -83,3 +83,6 @@
 
 ;;; Kill message buffer once the message is sent
 (setq message-kill-buffer-on-exit t)
+
+;;; Headers height in split (headers + message) view
+(setq mu4e-headers-visible-lines 16)
