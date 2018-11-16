@@ -89,3 +89,6 @@
 
 ;;; Headers height in split (headers + message) view
 (setq mu4e-headers-visible-lines 16)
+
+;;; Do not ask for confirmation when pressing q
+(setq mu4e-confirm-quit nil)
