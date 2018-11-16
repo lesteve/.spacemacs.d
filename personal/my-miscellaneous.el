@@ -19,3 +19,6 @@
      (sp-pair "\"" nil :actions '(:rem insert))
      )
   )
+
+;; Remove window decorations around emacs X window
+(toggle-frame-fullscreen)
