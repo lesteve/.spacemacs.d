@@ -46,6 +46,7 @@
 ;;; Mail directory shortcuts
 (setq mu4e-maildir-shortcuts
       '(("/inria/Inbox" . ?i)
+        ("/inria/SED" . ?s)
         ("/ymail/Inbox" . ?y)
         ("/gmx/Inbox" . ?g)
         ))
@@ -62,7 +63,9 @@
 ;;; Bookmarks
 (setq mu4e-bookmarks
       `(("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
-        ("flag:unread AND NOT flag:trashed AND (NOT flag:list OR list:sed-pro@inria.fr)"
+        ((concat
+          "flag:unread AND NOT flag:trashed "
+          "AND (NOT flag:list OR list:sed-pro.inria.fr OR list:sierra.inria.fr)")
          "Unread filtered messages" ?m)
         ("contact:notifications@github.com" "Github notifications" ?g)
         ("date:today..now" "Today's messages" ?t)
