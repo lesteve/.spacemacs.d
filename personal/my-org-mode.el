@@ -182,6 +182,17 @@
   ;; Content should not be indented when promoting/demoting the header
   (setq org-adapt-indentation nil)
 
+  ;; org-babel languages
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (shell . t)
+     (python . t)
+     ))
+
+  ;; Do not ask for confirmation when executing a block
+  (setq org-confirm-babel-evaluate nil)
+
   ;; ;; #+LaTeX_CLASS: beamer in org files
   ;; (unless (boundp 'org-export-latex-classes)
   ;;   (setq org-export-latex-classes nil))
