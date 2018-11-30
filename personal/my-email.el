@@ -45,6 +45,16 @@
                    (mu4e-drafts-folder . "/gmx/Draft")))
          ))
 
+;; Set list of addresses from contexts
+;; Note: mu4e-user-mail-address-list seems to be needed for
+;; (setq mu4e-compose-dont-reply-to-self t) to have an effect
+(setq mu4e-user-mail-address-list
+      (delq nil
+            (mapcar (lambda (context)
+                      (when (mu4e-context-vars context)
+                        (cdr (assq 'user-mail-address (mu4e-context-vars context)))))
+                    mu4e-contexts)))
+
 ;; do not ask for context when starting mu4e
 (setq mu4e-context-policy 'pick-first)
 
@@ -108,3 +118,6 @@
 
 ;;; Do not ask for confirmation when pressing q
 (setq mu4e-confirm-quit nil)
+
+;;; Do not add my email address when replying to all
+(setq mu4e-compose-dont-reply-to-self t)
