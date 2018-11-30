@@ -15,7 +15,8 @@
            :match-func (lambda (msg)
                          (when msg
                            (mu4e-message-contact-field-matches msg
-                                                               :to "loic.esteve@inria.fr")))
+                                                               '(:to :cc :bcc :from)
+                                                               "loic.esteve@inria.fr")))
            :vars '((user-mail-address . "loic.esteve@inria.fr")
                    (user-full-name . "Loïc Estève")
                    (mu4e-sent-folder . "/inria/Sent")
@@ -25,7 +26,8 @@
            :match-func (lambda (msg)
                          (when msg
                            (mu4e-message-contact-field-matches msg
-                                                               :to "loic.esteve@ymail.com")))
+                                                               '(:to :cc :bcc :from)
+                                                               "loic.esteve@ymail.com")))
            :vars '((user-mail-address . "loic.esteve@ymail.com")
                    (user-full-name . "Loïc Estève")
                    (mu4e-sent-folder . "/ymail/Sent")
@@ -35,7 +37,8 @@
            :match-func (lambda (msg)
                          (when msg
                            (mu4e-message-contact-field-matches msg
-                                                               :to "loic.esteve@gmx.com")))
+                                                               '(:to :cc :bcc :from)
+                                                               "loic.esteve@gmx.com")))
            :vars '((user-mail-address . "loic.esteve@gmx.com")
                    (user-full-name . "Loïc Estève")
                    (mu4e-sent-folder . "/gmx/Sent")
