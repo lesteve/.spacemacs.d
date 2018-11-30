@@ -1,6 +1,3 @@
-;;; Add locally compiled mu4e to load-path (Ubuntu 16.04 has mu4e/maildir-utils 0.9.12)
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-
 ;;; Set up some common mu4e variables
 (setq mu4e-maildir "~/.mail"
       mu4e-trash-folder "/Trash"
@@ -11,29 +8,42 @@
       mu4e-view-show-images t
       mu4e-view-show-addresses t)
 
-(setq mu4e-account-alist
-      '(
-        ("inria"
-         (mu4e-sent-folder "/inria/Sent")
-         (mu4e-drafts-folder "/inria/Drafts")
-         (user-mail-address "loic.esteve@inria.fr")
-         (user-full-name "Loïc Estève")
-         )
-        ("ymail"
-         (mu4e-sent-folder "/ymail/Sent")
-         (mu4e-drafts-folder "/ymail/Draft")
-         (user-mail-address "loic.esteve@ymail.com")
-         (user-full-name "Loïc Estève")
-         )
-        ("gmx"
-         (mu4e-sent-folder "/gmx/Sent")
-         (mu4e-drafts-folder "/gmx/Drafts")
-         (user-mail-address "loic.esteve@gmx.com")
-         (user-full-name "Loïc Estève")
-         )
-        ))
+;; Contexts for my different email accounts
+(setq mu4e-contexts
+      `( ,(make-mu4e-context
+           :name "inria"
+           :match-func (lambda (msg)
+                         (when msg
+                           (mu4e-message-contact-field-matches msg
+                                                               :to "loic.esteve@inria.fr")))
+           :vars '((user-mail-address . "loic.esteve@inria.fr")
+                   (user-full-name . "Loïc Estève")
+                   (mu4e-sent-folder . "/inria/Sent")
+                   (mu4e-drafts-folder . "/inria/Drafts")))
+         ,(make-mu4e-context
+           :name "ymail"
+           :match-func (lambda (msg)
+                         (when msg
+                           (mu4e-message-contact-field-matches msg
+                                                               :to "loic.esteve@ymail.com")))
+           :vars '((user-mail-address . "loic.esteve@ymail.com")
+                   (user-full-name . "Loïc Estève")
+                   (mu4e-sent-folder . "/ymail/Sent")
+                   (mu4e-drafts-folder . "/ymail/Draft")))
+         ,(make-mu4e-context
+           :name "gmx"
+           :match-func (lambda (msg)
+                         (when msg
+                           (mu4e-message-contact-field-matches msg
+                                                               :to "loic.esteve@gmx.com")))
+           :vars '((user-mail-address . "loic.esteve@gmx.com")
+                   (user-full-name . "Loïc Estève")
+                   (mu4e-sent-folder . "/gmx/Sent")
+                   (mu4e-drafts-folder . "/gmx/Draft")))
+         ))
 
-(mu4e/mail-account-reset)
+;; do not ask for context when starting mu4e
+(setq mu4e-context-policy 'pick-first)
 
 ;; sending mail
 (setq message-send-mail-function 'message-send-mail-with-sendmail
@@ -82,6 +92,8 @@
 (setq mu4e-change-filenames-when-moving t)
 
 ;;; Show only interesting folders in main view
+;; (setq mu4e-use-maildirs-extension t)
+
 (setq mu4e-maildirs-extension-custom-list
       '("/inria/Inbox" "/inria/SED" "/inria/Lists/WillowSierra" "/inria/Lists/hpc-big-data"
         "/ymail/Inbox" "/ymail/github" "/ymail/github/dask" "/ymail/github/scikit-learn"
