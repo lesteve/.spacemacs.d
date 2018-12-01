@@ -188,6 +188,7 @@
    '(
      (shell . t)
      (python . t)
+     (R . t)
      ))
 
   ;; Do not ask for confirmation when executing a block
