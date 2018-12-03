@@ -42,7 +42,7 @@
            :vars '((user-mail-address . "loic.esteve@gmx.com")
                    (user-full-name . "Loïc Estève")
                    (mu4e-sent-folder . "/gmx/Sent")
-                   (mu4e-drafts-folder . "/gmx/Draft")))
+                   (mu4e-drafts-folder . "/gmx/Drafts")))
          ))
 
 ;; Set list of addresses from contexts
