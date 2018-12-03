@@ -37,7 +37,9 @@ values."
      rust
      html
      yaml
-     (python :variables python-test-runner 'pytest)
+     (python :variables
+             python-test-runner 'pytest
+             python-backend 'anaconda)
      ipython-notebook
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
