@@ -195,6 +195,9 @@
   ;; Do not ask for confirmation when executing a block
   (setq org-confirm-babel-evaluate nil)
 
+  ;; Do not indent by 2 spaces inside src blocks
+  (setq org-src-preserve-indentation t)
+
   ;; ;; #+LaTeX_CLASS: beamer in org files
   ;; (unless (boundp 'org-export-latex-classes)
   ;;   (setq org-export-latex-classes nil))
