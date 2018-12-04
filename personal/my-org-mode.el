@@ -188,6 +188,7 @@
    '(
      (shell . t)
      (python . t)
+     (ipython . t)
      (R . t)
      ))
 
