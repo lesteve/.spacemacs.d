@@ -22,3 +22,10 @@
 
 ;; Remove window decorations around emacs X window
 (toggle-frame-fullscreen)
+
+;; Disable mouse in spacemacs evil-mode. It just happens too often that I touch
+;; the touchpad while typing, which causes to insert text somewhere I don't
+;; want. For some reason I could not get it to work with evil-motion-state-map
+;; and had to use evil-normal-state-map ...
+(define-key evil-normal-state-map [down-mouse-1] 'ignore)
+(define-key evil-normal-state-map [mouse-1] 'ignore)
