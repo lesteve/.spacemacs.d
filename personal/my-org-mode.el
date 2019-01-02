@@ -70,7 +70,7 @@
 
   ;; files included in the agenda
   (setq org-agenda-files
-        (list "~/org/todo.org" "~/org/zimbra-calendar.org"))
+        (list "~/org/todo.org" "~/org/zimbra-calendar.org" "~/org/test-calendar.org"))
 
   ;; remember functionalities (to quickly type notes when they pop out in your mind)
   (setq org-default-notes-file "~/org/notes.org")
@@ -170,14 +170,30 @@
   (add-hook 'org-shiftdown-final-hook 'windmove-down)
   (add-hook 'org-shiftright-final-hook 'windmove-right)
 
-  ;; calendar synchronization
+  ;;; calendar synchronization
   (require 'org-caldav)
 
   (setq org-caldav-url "https://zimbra.inria.fr/dav/lesteve")
-  (setq org-caldav-calendar-id "Calendar")
-  (setq org-caldav-inbox "~/org/zimbra-calendar.org")
+  (setq org-caldav-calendars
+        '((:calendar-id "Calendar"
+                        :inbox "~/org/zimbra-calendar.org")
+          (:calendar-id "test-calendar"
+                        :inbox "~/org/test-calendar.org")))
+
   (setq org-icalendar-timezone "Europe/Paris")
+  ;; This makes sure to-do items as a category can show up on the calendar
+  (setq org-icalendar-include-todo t)
+  ;; This ensures all org "deadlines" show up, and show up as due dates
   (setq org-icalendar-use-deadline '(event-if-todo event-if-not-todo todo-due))
+  ;; This ensures "scheduled" org items show up, and show up as start times
+  (setq org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo))
+  ;; Ask before deleting an entry in the calendar
+  (setq org-caldav-delete-calendar-entries 'ask)
+  ;; When synchronizing org files between different computers, you want to have
+  ;; the sync state synchronized too
+  (setq org-caldav-save-directory "~/org")
+  ;; same thing for org-caldav-backup-file
+  (setq org-caldav-backup-file "~/org/org-caldav-backup.org")
 
   ;; Content should not be indented when promoting/demoting the header
   (setq org-adapt-indentation nil)
