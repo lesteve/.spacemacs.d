@@ -159,7 +159,7 @@
   (setq org-archive-location "~/org/journal.org::datetree/")
 
   ;; org export for reveal.js presentations
-;;  (require 'ox-reveal)
+  (require 'ox-reveal)
 
   ;; org-protocol for capturing from firefox
   (require 'org-protocol)
