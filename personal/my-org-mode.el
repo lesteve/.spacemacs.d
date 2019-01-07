@@ -195,6 +195,37 @@
   ;; same thing for org-caldav-backup-file
   (setq org-caldav-backup-file "~/org/org-caldav-backup.org")
 
+  ;; org-caldav-sync-at-close and org-caldav-sync-with-delay are taken from
+  ;; https://www.reddit.com/r/orgmode/comments/8rl8ep/making_orgcaldav_useable/e0sb5j0/
+  ;; This is the sync on close function; it also prompts for save after syncing
+  ;; so no late changes get lost
+  (defun org-caldav-sync-at-close ()
+    (org-caldav-sync)
+    (save-some-buffers))
+
+  ;; This is the delayed sync function; it waits until emacs has been idle for
+  ;; "secs" seconds before syncing.  The delay is important because the caldav-sync
+  ;; can take five or ten seconds, which would be painful if it did that right at save.
+  ;; This way it just waits until you've been idle for a while to avoid disturbing
+  ;; the user.
+  (defvar org-caldav-sync-timer nil
+    "Timer that `org-caldav-push-timer' used to reschedule itself, or nil.")
+  (defun org-caldav-sync-with-delay (secs)
+    (when org-caldav-sync-timer
+      (cancel-timer org-caldav-sync-timer))
+    (setq org-caldav-sync-timer
+          (run-with-idle-timer
+           (* 1 secs) nil 'org-caldav-sync)))
+
+  ;; Add the delayed save hook with a five minute idle timer
+  (add-hook 'after-save-hook
+            (lambda ()
+              (when (eq major-mode 'org-mode)
+                (org-caldav-sync-with-delay 300))))
+
+  ;; Add the close emacs hook
+  (add-hook 'kill-emacs-hook 'org-caldav-sync-at-close)
+
   ;; Content should not be indented when promoting/demoting the header
   (setq org-adapt-indentation nil)
 
