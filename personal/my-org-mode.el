@@ -70,7 +70,7 @@
 
   ;; files included in the agenda
   (setq org-agenda-files
-        (list "~/org/todo.org" "~/org/zimbra-calendar.org" "~/org/test-calendar.org"))
+        (list "~/org/todo.org" "~/org/zimbra-calendar.org" "~/org/zimbra-private.org"))
 
   ;; remember functionalities (to quickly type notes when they pop out in your mind)
   (setq org-default-notes-file "~/org/notes.org")
@@ -177,8 +177,8 @@
   (setq org-caldav-calendars
         '((:calendar-id "Calendar"
                         :inbox "~/org/zimbra-calendar.org")
-          (:calendar-id "test-calendar"
-                        :inbox "~/org/test-calendar.org")))
+          (:calendar-id "private"
+                        :inbox "~/org/zimbra-private.org")))
 
   (setq org-icalendar-timezone "Europe/Paris")
   ;; This makes sure to-do items as a category can show up on the calendar
