@@ -103,15 +103,15 @@
                                    ("journal.org" :maxlevel . 2)
                                    (nil :maxlevel . 3))))
 
-  ;; Need that in order for heml completion to work. From
+  ;; Need that in order for helm completion to work. From
   ;; http://emacs.stackexchange.com/questions/14535/how-can-i-use-helm-with-org-refile
   (setq org-outline-path-complete-in-steps nil)
 
-                                        ; Targets start with the file name - allows creating level 1 tasks
+  ;; Targets start with the file name - allows creating level 1 tasks
   (setq org-refile-use-outline-path (quote file))
 
-                                        ; Targets complete in steps so we start with filename, TAB shows the
-                                        ; next level of targets etc
+  ;; Targets complete in steps so we start with filename, TAB shows the
+  ;; next level of targets etc
   ;; commented for now (uncomment if too many completions at one point)
   ;; (setq org-outline-path-complete-in-steps t)
 
