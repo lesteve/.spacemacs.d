@@ -79,6 +79,9 @@
   (setq org-todo-keywords
         '((sequence "TODO(t)" "SOMEDAY(s)" "STARTED(S!/!)" "WAITING(w/!)" "|" "DONE(d)" "DEFERRED(D@)" "CANCELLED(c@)")))
 
+  (defun my-focus-emacs-window ()
+    (call-process "wmctrl" nil nil nil "-x" "-a" "emacs"))
+
   (setq org-capture-templates
         '(("c" "Refile later" entry (file+headline "~/org/refile.org" "Captured")
            "* %?\nEntered on %T\n%i\n")
@@ -87,7 +90,7 @@
           ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
            "* %?\nEntered on %U\n  %i\n  %a")
           ("w" "Webpage" entry (file+headline "~/org/refile.org" "Webpages")
-           "* %:description\nEntered on %U\nSource: %:link\n\n%:initial%?")))
+           "* %:description\nEntered on %U\nSource: %:link\n\n%:initial%? %(progn (my-focus-emacs-window) \"\")")))
 
   ;; to make a TODO item dependent of its subtrees items
   (setq org-enforce-todo-dependencies t)
