@@ -87,7 +87,7 @@
           ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
            "* %?\nEntered on %U\n  %i\n  %a")
           ("w" "Webpage" entry (file+headline "~/org/refile.org" "Webpages")
-           "* %c\nEntered on %U\nSource: %:link\n%i\n%?")))
+           "* %:description\nEntered on %U\nSource: %:link\n\n%:initial%?")))
 
   ;; to make a TODO item dependent of its subtrees items
   (setq org-enforce-todo-dependencies t)
