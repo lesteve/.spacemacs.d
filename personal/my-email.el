@@ -121,3 +121,11 @@
 
 ;;; Do not add my email address when replying to all
 (setq mu4e-compose-dont-reply-to-self t)
+
+;; Disable format=flowed. Giving up on devices that reflow content because it
+;; seems to cumbersome at the time of writing. mu4e-compose-format-flowed is
+;; nil by default but setting it explicitly.
+(setq mu4e-compose-format-flowed nil)
+;; The next line is needed. mml-enable-flowed is t by default which causes
+;; email to be encoded with format=flowed.
+(setq mml-enable-flowed nil)
