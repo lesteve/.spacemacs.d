@@ -1,4 +1,6 @@
-(server-mode 1)
+;; Start emacs server if not running already
+(require 'server)
+(unless (server-running-p) (server-start))
 
 ;; So I can use accents when I feel like writing some French
 (require 'iso-transl)
