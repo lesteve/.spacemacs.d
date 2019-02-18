@@ -6,6 +6,17 @@
 ;; Default fill column, used e.g. by M-q
 (setq-default fill-column 79)
 
+;; Wrap lines to fill-column in visual-mode (useful e.g. when reading emails in
+;; mu4e). For some reason just using visual-fill-column-mode does not work
+;; (i.e. visual-fill-column never gets turned off)
+(require 'visual-fill-column)
+(defun my-visual-fill-column-mode ()
+    (if visual-fill-column-mode
+        (visual-fill-column-mode 0)
+      (visual-fill-column-mode 1)))
+
+(setq visual-line-mode-hook #'my-visual-fill-column-mode)
+
 ;; Disable auto-insertion of matching character in smartparens
 (eval-after-load 'smartparens
   '(progn
