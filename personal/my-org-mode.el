@@ -229,6 +229,9 @@
   ;; Add the close emacs hook
   (add-hook 'kill-emacs-hook 'org-caldav-sync-at-close)
 
+  ;; Calendar display similar to Google Calendar
+  (require 'calfw-org)
+
   ;; Content should not be indented when promoting/demoting the header
   (setq org-adapt-indentation nil)
 
