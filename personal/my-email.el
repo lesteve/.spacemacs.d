@@ -43,6 +43,17 @@
                    (user-full-name . "Loïc Estève")
                    (mu4e-sent-folder . "/gmx/Sent")
                    (mu4e-drafts-folder . "/gmx/Drafts")))
+         ,(make-mu4e-context
+           :name "outlook"
+           :match-func (lambda (msg)
+                         (when msg
+                           (mu4e-message-contact-field-matches msg
+                                                               '(:to :cc :bcc :from)
+                                                               "loic.esteve@outlook.com")))
+           :vars '((user-mail-address . "loic.esteve@outlook.com")
+                   (user-full-name . "Loïc Estève")
+                   (mu4e-sent-folder . "/outlook/Sent")
+                   (mu4e-drafts-folder . "/outlook/Drafts")))
          ))
 
 ;; Set list of addresses from contexts
@@ -72,6 +83,7 @@
         ("/inria/SED" . ?s)
         ("/ymail/Inbox" . ?y)
         ("/gmx/Inbox" . ?g)
+        ("/outlook/Inbox" . ?t)
         ))
 
 
@@ -108,7 +120,8 @@
 (setq mu4e-maildirs-extension-custom-list
       '("/inria/Inbox" "/inria/SED" "/inria/Lists/WillowSierra" "/inria/Lists/hpc-big-data"
         "/ymail/Inbox" "/ymail/github" "/ymail/github/dask" "/ymail/github/scikit-learn"
-        "/gmx/Inbox" "/gmx/Inbox/AhOuhPuc" "/gmx/Inbox/Roc14"))
+        "/gmx/Inbox" "/gmx/Inbox/AhOuhPuc" "/gmx/Inbox/Roc14"
+        "/outlook/Inbox"))
 
 ;;; Kill message buffer once the message is sent
 (setq message-kill-buffer-on-exit t)
