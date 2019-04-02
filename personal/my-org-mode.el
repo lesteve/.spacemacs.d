@@ -148,11 +148,11 @@
 
   ;; Encryption of tags crypt (e.g. for saving passwords and stuff)
   (require 'org-crypt)
-                                        ; Encrypt all entries before saving
+  ;; Encrypt all entries before saving
   (org-crypt-use-before-save-magic)
   (setq org-tags-exclude-from-inheritance (quote ("crypt")))
-                                        ; GPG key to use for encryption
-  (setq org-crypt-key "F0B66B40")
+  ;; Use symmetric encryption
+  (setq org-crypt-key nil)
 
   ;; To save the clock history across Emacs sessions
   (setq org-clock-persist 'history)
