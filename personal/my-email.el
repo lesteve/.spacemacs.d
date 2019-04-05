@@ -8,6 +8,9 @@
       mu4e-view-show-images t
       mu4e-view-show-addresses t)
 
+(setq my-work-query "AND NOT maildir:/gmx/ AND NOT maildir:/outlook/")
+(setq my-work-folder-regex "inria\\|ymail")
+
 ;; Contexts for my different email accounts
 (setq mu4e-contexts
       `( ,(make-mu4e-context
@@ -20,7 +23,9 @@
            :vars '((user-mail-address . "loic.esteve@inria.fr")
                    (user-full-name . "Loïc Estève")
                    (mu4e-sent-folder . "/inria/Sent")
-                   (mu4e-drafts-folder . "/inria/Drafts")))
+                   (mu4e-drafts-folder . "/inria/Drafts"))
+           :enter-func (lambda () (my-context-enter-func my-work-query my-work-folder-regex))
+           )
          ,(make-mu4e-context
            :name "ymail"
            :match-func (lambda (msg)
@@ -31,7 +36,9 @@
            :vars '((user-mail-address . "loic.esteve@ymail.com")
                    (user-full-name . "Loïc Estève")
                    (mu4e-sent-folder . "/ymail/Sent")
-                   (mu4e-drafts-folder . "/ymail/Draft")))
+                   (mu4e-drafts-folder . "/ymail/Draft"))
+           :enter-func (lambda () (my-context-enter-func my-work-query my-work-folder-regex))
+           )
          ,(make-mu4e-context
            :name "gmx"
            :match-func (lambda (msg)
@@ -42,7 +49,9 @@
            :vars '((user-mail-address . "loic.esteve@gmx.com")
                    (user-full-name . "Loïc Estève")
                    (mu4e-sent-folder . "/gmx/Sent")
-                   (mu4e-drafts-folder . "/gmx/Drafts")))
+                   (mu4e-drafts-folder . "/gmx/Drafts"))
+           :enter-func (lambda () (my-context-enter-func nil nil))
+           )
          ,(make-mu4e-context
            :name "outlook"
            :match-func (lambda (msg)
@@ -53,7 +62,9 @@
            :vars '((user-mail-address . "loic.esteve@outlook.com")
                    (user-full-name . "Loïc Estève")
                    (mu4e-sent-folder . "/outlook/Sent")
-                   (mu4e-drafts-folder . "/outlook/Drafts")))
+                   (mu4e-drafts-folder . "/outlook/Drafts"))
+           :enter-func (lambda () (my-context-enter-func nil nil))
+           )
          ))
 
 ;; Set list of addresses from contexts
@@ -96,9 +107,29 @@
 (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
 
 ;;; Bookmarks
-(setq mu4e-bookmarks
+(defun my-add-query-to-bookmark (query bookmark)
+  (if (null query)
+      bookmark
+    (cons (concat (car bookmark)
+                  (concat " " query))
+          (cdr bookmark))))
+
+(defun my-filter-maildirs(folder-regex maildirs)
+  (if (null folder-regex)
+   my-default-mu4e-maildirs-extension-custom-list
+   (seq-filter (lambda (each) (string-match-p folder-regex each))
+               maildirs)))
+
+(defun my-context-enter-func (query folder-regex)
+  (setq mu4e-bookmarks (mapcar (lambda (bookmark) (my-add-query-to-bookmark query bookmark)) my-default-mu4e-bookmarks))
+  (setq mu4e-maildirs-extension-custom-list
+        (my-filter-maildirs folder-regex my-default-mu4e-maildirs-extension-custom-list))
+  ;; Need to reset the variable used to cache the list of shown maildirs
+  (setq mu4e-maildirs-extension-maildirs nil))
+
+(setq my-default-mu4e-bookmarks
       `(("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
-        ((concat
+        (,(concat
           "flag:unread AND NOT flag:trashed "
           "AND (NOT flag:list OR list:sed-pro.inria.fr OR list:sierra.inria.fr)")
          "Unread filtered messages" ?m)
@@ -117,7 +148,7 @@
 (setq mu4e-change-filenames-when-moving t)
 
 ;;; Show only interesting folders in main view
-(setq mu4e-maildirs-extension-custom-list
+(setq my-default-mu4e-maildirs-extension-custom-list
       '("/inria/Inbox" "/inria/SED" "/inria/Lists/WillowSierra" "/inria/Lists/hpc-big-data"
         "/ymail/Inbox" "/ymail/github" "/ymail/github/dask" "/ymail/github/scikit-learn"
         "/gmx/Inbox" "/gmx/Inbox/AhOuhPuc" "/gmx/Inbox/Roc14"
