@@ -138,14 +138,6 @@
               (define-key yas/keymap [tab] 'yas/next-field-group)
               ))
 
-  ;; To default to a side by side display for agenda views
-  (defadvice org-agenda (around tweak-splitting-behavior activate)
-    "Tweak the sensible window splitting behavior for org-todo."
-    (let ((split-height-threshold nil)
-          (split-width-threshold 20)
-          )
-      ad-do-it))
-
   ;; Encryption of tags crypt (e.g. for saving passwords and stuff)
   (require 'org-crypt)
   ;; Encrypt all entries before saving
