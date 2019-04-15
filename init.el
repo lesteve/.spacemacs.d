@@ -47,7 +47,7 @@ This function should only modify configuration layer settings."
      markdown
      multiple-cursors
      treemacs
-     (org :variables org-enable-reveal-js-support t)
+     org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -78,7 +78,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(org-caldav ob-ipython disable-mouse visual-fill-column calfw calfw-org)
+   dotspacemacs-additional-packages '(org-caldav ob-ipython disable-mouse visual-fill-column calfw calfw-org org-re-reveal)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
