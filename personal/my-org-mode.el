@@ -194,7 +194,7 @@
   ;; https://www.reddit.com/r/orgmode/comments/8rl8ep/making_orgcaldav_useable/e0sb5j0/
   ;; This is the sync on close function; it also prompts for save after syncing
   ;; so no late changes get lost
-  (defun org-caldav-sync-at-close ()
+  (defun my-org-caldav-sync-at-close ()
     (org-caldav-sync)
     (save-some-buffers))
 
@@ -203,23 +203,29 @@
   ;; can take five or ten seconds, which would be painful if it did that right at save.
   ;; This way it just waits until you've been idle for a while to avoid disturbing
   ;; the user.
-  (defvar org-caldav-sync-timer nil
+  (defvar my-org-caldav-sync-timer nil
     "Timer that `org-caldav-push-timer' used to reschedule itself, or nil.")
-  (defun org-caldav-sync-with-delay (secs)
-    (when org-caldav-sync-timer
-      (cancel-timer org-caldav-sync-timer))
-    (setq org-caldav-sync-timer
+  (defun my-org-caldav-sync ()
+    (org-caldav-sync)
+    (message (buffer-name))
+    (if (eq org-caldav-sync-result nil)
+        (kill-buffer "*org caldav sync result*")))
+
+  (defun my-org-caldav-sync-with-delay (secs)
+    (when my-org-caldav-sync-timer
+      (cancel-timer my-org-caldav-sync-timer))
+    (setq my-org-caldav-sync-timer
           (run-with-idle-timer
-           (* 1 secs) nil 'org-caldav-sync)))
+           (* 1 secs) nil 'my-org-caldav-sync)))
 
   ;; Add the delayed save hook with a five minute idle timer
   (add-hook 'after-save-hook
             (lambda ()
               (when (eq major-mode 'org-mode)
-                (org-caldav-sync-with-delay 300))))
+                (my-org-caldav-sync-with-delay 300))))
 
   ;; Add the close emacs hook
-  (add-hook 'kill-emacs-hook 'org-caldav-sync-at-close)
+  (add-hook 'kill-emacs-hook 'my-org-caldav-sync-at-close)
 
   ;; Calendar display similar to Google Calendar
   (require 'calfw-org)
