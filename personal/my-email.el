@@ -8,8 +8,10 @@
       mu4e-view-show-images t
       mu4e-view-show-addresses t)
 
-(setq my-work-query "AND NOT maildir:/gmx/ AND NOT maildir:/outlook/")
+(setq my-work-query "AND (maildir:/inria/ OR maildir:/ymail/)")
 (setq my-work-folder-regex "inria\\|ymail")
+(setq my-personal-query "AND (maildir:/gmx/ OR maildir:/outlook/)")
+(setq my-personal-folder-regex "gmx\\|outlook")
 
 ;; Contexts for my different email accounts
 (setq mu4e-contexts
@@ -50,7 +52,7 @@
                    (user-full-name . "Loïc Estève")
                    (mu4e-sent-folder . "/gmx/Sent")
                    (mu4e-drafts-folder . "/gmx/Drafts"))
-           :enter-func (lambda () (my-context-enter-func nil nil))
+           :enter-func (lambda () (my-context-enter-func my-personal-query my-personal-folder-regex))
            )
          ,(make-mu4e-context
            :name "outlook"
@@ -63,7 +65,7 @@
                    (user-full-name . "Loïc Estève")
                    (mu4e-sent-folder . "/outlook/Sent")
                    (mu4e-drafts-folder . "/outlook/Drafts"))
-           :enter-func (lambda () (my-context-enter-func nil nil))
+           :enter-func (lambda () (my-context-enter-func my-personal-query my-personal-folder-regex))
            )
          ))
 
