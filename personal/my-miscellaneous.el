@@ -10,8 +10,10 @@
 (require 'visual-fill-column)
 (defun my-visual-fill-column-mode ()
     (if visual-fill-column-mode
-        (visual-fill-column-mode 0)
-      (visual-fill-column-mode 1)))
+        (progn (setq visual-fill-column-width nil)
+               (visual-fill-column-mode 0))
+      (progn (setq visual-fill-column-width 120)
+             (visual-fill-column-mode 1))))
 
 (setq visual-line-mode-hook #'my-visual-fill-column-mode)
 
