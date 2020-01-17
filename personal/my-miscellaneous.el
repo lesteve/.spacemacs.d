@@ -44,3 +44,7 @@
 ;; of each other. This is useful for magit status or org-agenda.
 (setq split-height-threshold nil)
 (setq split-width-threshold 20)
+
+;; Keep C-i different than TAB when using emacs GUI. This is useful to use C-i
+;; for evil-jump-forward i.e. move forward in the Jump List
+(setq dotspacemacs-distinguish-gui-tab t)
