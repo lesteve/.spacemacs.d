@@ -4,6 +4,12 @@
 ;; Add current function to the spaceline
 (add-hook 'python-mode-hook #'which-function-mode)
 
+;; Disable which-function-mode in Cython
+;; See https://github.com/syl20bnr/spacemacs/issues/12740
+(add-hook 'cython-mode-hook
+          (lambda ()
+            (which-function-mode -1)))
+
 ;; Use ipython rather than plain python for the python shell
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "-i --simple-prompt --matplotlib")
