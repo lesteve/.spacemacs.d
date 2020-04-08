@@ -70,6 +70,7 @@ This function should only modify configuration layer settings."
            mu4e-installation-path "/usr/local/share/emacs/site-lisp/mu4e")
      ess
      cmake
+     docker
      )
 
    ;; List of additional packages that will be installed without being
