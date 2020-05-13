@@ -62,7 +62,8 @@ This function should only modify configuration layer settings."
      yaml
      (python :variables
              python-test-runner 'pytest
-             python-backend 'anaconda)
+             python-backend 'anaconda
+             python-formatter 'black)
      ipython-notebook
      semantic
      (mu4e :variables
