@@ -17,16 +17,6 @@
 
 (setq visual-line-mode-hook #'my-visual-fill-column-mode)
 
-;; Disable auto-insertion of matching character in smartparens
-(eval-after-load 'smartparens
-  '(progn
-     (sp-pair "(" nil :actions '(:rem insert))
-     (sp-pair "[" nil :actions '(:rem insert))
-     (sp-pair "'" nil :actions '(:rem insert))
-     (sp-pair "\"" nil :actions '(:rem insert))
-     )
-  )
-
 ;; Remove window decorations around emacs X window
 (toggle-frame-fullscreen)
 
