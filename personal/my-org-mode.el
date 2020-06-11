@@ -39,8 +39,8 @@
 
   (defun my-appt-disp-window (min-to-app new-time msg)
     (save-window-excursion (shell-command (concat
-                                           "/usr/bin/kdialog --title='Appointment' --passivepopup '<p style=\"background: yellow; color: purple\">"
-                                           msg " (" min-to-app " minutes left)<br></p>""' 30") nil nil)))
+                                           "/usr/bin/kdialog --title='Appointment' --passivepopup '"
+                                           msg " (" min-to-app " minutes left)' 30") nil nil)))
 
   ;; to make mailto link work properly at the moment 18/06/2010
   ;; browse-url is default and does not work for some reason maybe
