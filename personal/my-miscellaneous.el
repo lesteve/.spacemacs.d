@@ -17,9 +17,6 @@
 
 (setq visual-line-mode-hook #'my-visual-fill-column-mode)
 
-;; Remove window decorations around emacs X window
-(toggle-frame-fullscreen)
-
 ;; Disable mouse globally
 (require 'disable-mouse)
 (global-disable-mouse-mode)
