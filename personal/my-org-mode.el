@@ -255,4 +255,6 @@
   ;; Do not indent by 2 spaces inside src blocks
   (setq org-src-preserve-indentation t)
 
+  ;; Link to mu4e emails
+  (require 'org-mu4e)
 )
