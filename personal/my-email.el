@@ -139,6 +139,7 @@
         ("date:today..now" "Today's messages" ?t)
         ("date:7d..now" "Last 7 days" ?w)
         ("mime:image/*" "Messages with images" ?p)
+        ("from:loic.esteve" "Sent" ?s)
         (,(mapconcat 'identity
                      (mapcar
                       (lambda (maildir)
