@@ -72,6 +72,7 @@ This function should only modify configuration layer settings."
      ess
      cmake
      docker
+     pass
      )
 
    ;; List of additional packages that will be installed without being
