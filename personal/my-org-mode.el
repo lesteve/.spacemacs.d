@@ -143,8 +143,8 @@
   ;; Encrypt all entries before saving
   (org-crypt-use-before-save-magic)
   (setq org-tags-exclude-from-inheritance (quote ("crypt")))
-  ;; Use symmetric encryption
-  (setq org-crypt-key nil)
+  ;; Use my GPG key
+  (setq org-crypt-key "loic.esteve@inria.fr")
 
   ;; To save the clock history across Emacs sessions
   (setq org-clock-persist 'history)
