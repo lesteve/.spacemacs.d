@@ -176,3 +176,24 @@
 ;; The next line is needed. mml-enable-flowed is t by default which causes
 ;; email to be encoded with format=flowed.
 (setq mml-enable-flowed nil)
+
+;; In an ideal world I would do it by setting spacemacs-evil layer variables as
+;; shown in
+;; https://github.com/syl20bnr/spacemacs/blob/develop/layers/+spacemacs/spacemacs-evil/README.org#note-about-evil-collection
+;; my feeling is that the evil-collection init happens early and that the spacemacs mu4e keybindings override them
+
+(evil-collection-mu4e-setup)
+
+;; add shortcut for visual-line-mode (useful for emails with long lines)
+(evil-collection-define-key 'normal 'mu4e-view-mode-map
+  "zv" 'visual-line-mode
+)
+
+;; override j/k to go up and down in headers when having both headers and
+;; message view. With evil-collection j/k is the same as C-j/k which is
+;; slightly weird. The first j in the headers switches focus to the message and
+;; the next j moves up in the message
+(evil-collection-define-key 'normal 'mu4e-headers-mode-map
+  "j" 'evil-next-line
+  "k" 'evil-previous-line
+)
