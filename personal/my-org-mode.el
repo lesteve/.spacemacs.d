@@ -77,7 +77,7 @@
   ;;(org-remember-insinuate)
 
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "SOMEDAY(s)" "STARTED(S!/!)" "WAITING(w/!)" "|" "DONE(d)" "DEFERRED(D)" "CANCELLED(c)")))
+        '((sequence "TODO(t)" "SOMEDAY(S)" "STARTED(s!/!)" "WAITING(w/!)" "|" "DONE(d)" "DEFERRED(D)" "CANCELLED(c)")))
 
   (defun my-focus-emacs-window ()
     (call-process "wmctrl" nil nil nil "-x" "-a" "emacs"))
