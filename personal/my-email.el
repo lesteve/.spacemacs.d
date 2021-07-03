@@ -189,11 +189,20 @@
   "zv" 'visual-line-mode
 )
 
-;; override j/k to go up and down in headers when having both headers and
-;; message view. With evil-collection j/k is the same as C-j/k which is
-;; slightly weird. The first j in the headers switches focus to the message and
-;; the next j moves up in the message
+(defun my-mu4e-delete-thread ()
+  (interactive)
+  (mu4e-headers-mark-thread nil '(delete))
+)
+
 (evil-collection-define-key 'normal 'mu4e-headers-mode-map
+  ;; override j/k to go up and down in headers when having both headers and
+  ;; message view. With evil-collection j/k is the same as C-j/k which is
+  ;; slightly weird. The first j in the headers switches focus to the message
+  ;; and the next j moves up in the message
   "j" 'evil-next-line
   "k" 'evil-previous-line
+  ;; D deletes whole thread (this is almost always what I want)
+  "D" 'my-mu4e-delete-thread
+  ;; d deletes message (by default d moves to Trash but I never use this)
+  "d" 'mu4e-headers-mark-for-delete
 )
