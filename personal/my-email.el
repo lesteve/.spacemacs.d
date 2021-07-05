@@ -206,3 +206,9 @@
   ;; d deletes message (by default d moves to Trash but I never use this)
   "d" 'mu4e-headers-mark-for-delete
 )
+
+;; enable inline images
+(setq mu4e-view-show-images t)
+;; use imagemagick, if available
+(when (fboundp 'imagemagick-register-types)
+  (imagemagick-register-types))
