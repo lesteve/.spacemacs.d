@@ -145,6 +145,8 @@
   (setq org-tags-exclude-from-inheritance (quote ("crypt")))
   ;; Use my GPG key
   (setq org-crypt-key "loic.esteve@inria.fr")
+  ;; Disable auto-save in buffer when using org-decrypt
+  (setq org-crypt-disable-auto-save t)
 
   ;; To save the clock history across Emacs sessions
   (setq org-clock-persist 'history)
