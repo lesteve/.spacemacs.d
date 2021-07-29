@@ -35,3 +35,19 @@
 ;; Keep C-i different than TAB when using emacs GUI. This is useful to use C-i
 ;; for evil-jump-forward i.e. move forward in the Jump List
 (setq dotspacemacs-distinguish-gui-tab t)
+
+;; Custom shortcut to use org-rifle on my org files with latest modified files
+;; first. This is more useful than the default SPC a o / which only use opened
+;; .org files.
+(defun my-helm-org-rifle ()
+  (interactive)
+  (helm-org-rifle-files
+   (mapcar #'car
+           (sort (directory-files-and-attributes "~/org" t ".*\.org")
+                 #'(lambda (x y) (not (time-less-p (nth 6 x) (nth 6 y))))
+                 )
+           )
+   )
+)
+(spacemacs/set-leader-keys "ao/" 'my-helm-org-rifle)
+
