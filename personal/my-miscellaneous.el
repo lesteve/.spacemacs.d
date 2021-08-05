@@ -43,9 +43,12 @@
   (interactive)
   (helm-org-rifle-files
    (mapcar #'car
-           (sort (directory-files-and-attributes "~/org" t ".*\.org")
-                 #'(lambda (x y) (not (time-less-p (nth 6 x) (nth 6 y))))
-                 )
+           (sort
+            ;; the pattern excludes lock files which starts with .#
+            ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Locks.html#File-Locks
+              (directory-files-and-attributes "~/org" t "^[^.][^#].*\.org")
+              #'(lambda (x y) (not (time-less-p (nth 6 x) (nth 6 y))))
+              )
            )
    )
 )
