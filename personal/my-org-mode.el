@@ -259,4 +259,28 @@
 
   ;; Link to mu4e emails
   (require 'org-mu4e)
+
+  ;; org-capture in full frame from capturing from anywhere
+  (require 'noflet)
+
+  (defun my-org-capture-in-new-full-frame ()
+    "Create a new frame and run org-capture in full frame (i.e. no splitting).
+Taken from https://stackoverflow.com/a/24643887"
+
+    (interactive)
+    (add-hook 'org-capture-after-finalize-hook 'my-org-capture-after-finalize-hook)
+    (make-frame '((name . "capture")))
+    (select-frame-by-name "capture")
+    (delete-other-windows)
+    (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
+      (org-capture)))
+
+  (defun my-org-capture-after-finalize-hook ()
+    ;; Delete the frame after capture has been done
+    (delete-frame)
+    ;; Remove myself (i.e. the function currently executed) from the hook so that
+    ;; delete-frame is only called after this capture session
+    (remove-hook 'org-capture-after-finalize-hook 'my-org-capture-after-finalize-hook)
+    )
+
 )
