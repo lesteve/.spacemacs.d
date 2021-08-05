@@ -50,4 +50,3 @@
    )
 )
 (spacemacs/set-leader-keys "ao/" 'my-helm-org-rifle)
-
