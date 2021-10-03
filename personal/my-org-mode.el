@@ -283,4 +283,28 @@ Taken from https://stackoverflow.com/a/24643887"
     (remove-hook 'org-capture-after-finalize-hook 'my-org-capture-after-finalize-hook)
     )
 
+  ;; org-pomodoro settings
+  (require 'org-pomodoro)
+  (setq
+   alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil))))
+  (setq org-pomodoro-play-sounds nil)
+
+  ;; Uncomment this for quicker testing
+  ;; (setq
+  ;;  org-pomodoro-length 1
+  ;;  org-pomodoro-short-break-length 1)
+
+  (defun my-org-pomodoro-info ()
+    "Return info about pomodoro state. Adapted from https://colekillian.com/posts/org-pomodoro-and-polybar/"
+    (if (org-pomodoro-active-p)
+        (cl-case org-pomodoro-state
+          (:pomodoro
+           (format "%s: %d minutes" org-clock-heading (/ (org-pomodoro-remaining-seconds) 60)))
+          (:short-break
+           (format "Short break: %d minutes" (/ (org-pomodoro-remaining-seconds) 60)))
+          (:long-break
+           (format "Long break: %d minutes" (/ (org-pomodoro-remaining-seconds) 60)))
+          (:overtime
+           (format "Overtime! %d minutes" (/ (org-pomodoro-remaining-seconds) 60))))
+      "No active pomodoro"))
 )
