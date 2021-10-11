@@ -306,5 +306,5 @@ Taken from https://stackoverflow.com/a/24643887"
            (format "Long break: %d minutes" (/ (org-pomodoro-remaining-seconds) 60)))
           (:overtime
            (format "Overtime! %d minutes" (/ (org-pomodoro-remaining-seconds) 60))))
-      "No active pomodoro"))
+      ""))
 )
