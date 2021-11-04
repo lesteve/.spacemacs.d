@@ -4,11 +4,14 @@
 ;; Add current function to the spaceline
 (add-hook 'python-mode-hook #'which-function-mode)
 
+
 ;; Disable which-function-mode in Cython
 ;; See https://github.com/syl20bnr/spacemacs/issues/12740
 (add-hook 'cython-mode-hook
           (lambda ()
-            (which-function-mode -1)))
+            (which-function-mode -1)
+            ;; the depth=10 argument is to make sure this hook is called last
+            ) 10)
 
 ;; Use ipython rather than plain python for the python shell
 (setq python-shell-interpreter "ipython"
