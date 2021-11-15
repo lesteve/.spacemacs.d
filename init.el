@@ -527,7 +527,8 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; Keep custom-variables section out of my init.el file
   ;; https://develop.spacemacs.org/doc/DOCUMENTATION.html#custom-variables
   (setq custom-file "~/.emacs.d/.cache/.custom-settings")
-  (load custom-file)
+  (if (file-exists-p custom-file)
+      (load custom-file))
   )
 
 (defun dotspacemacs/user-load ()
