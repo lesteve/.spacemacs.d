@@ -1,6 +1,5 @@
 ;;; Set up some common mu4e variables
-(setq mu4e-maildir "~/.mail"
-      mu4e-trash-folder "/Trash"
+(setq mu4e-trash-folder "/Trash"
       mu4e-refile-folder "/Archive"
       mu4e-get-mail-command "mbsync -a"
       mu4e-update-interval nil
@@ -68,16 +67,6 @@
            :enter-func (lambda () (my-context-enter-func my-personal-query my-personal-folder-regex))
            )
          ))
-
-;; Set list of addresses from contexts
-;; Note: mu4e-user-mail-address-list seems to be needed for
-;; (setq mu4e-compose-dont-reply-to-self t) to have an effect
-(setq mu4e-user-mail-address-list
-      (delq nil
-            (mapcar (lambda (context)
-                      (when (mu4e-context-vars context)
-                        (cdr (assq 'user-mail-address (mu4e-context-vars context)))))
-                    mu4e-contexts)))
 
 ;; do not ask for context when starting mu4e
 (setq mu4e-context-policy 'pick-first)
