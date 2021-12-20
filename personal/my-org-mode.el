@@ -82,12 +82,15 @@
   (defun my-focus-emacs-window ()
     (call-process "wmctrl" nil nil nil "-x" "-a" "emacs"))
 
+  (setq my-org-journal-file-basename (format-time-string "%Y-journal.org"))
+  (setq my-org-journal-file (format "~/org/%s" my-org-journal-file-basename))
+
   (setq org-capture-templates
         '(("c" "Refile later" entry (file+headline "~/org/refile.org" "Captured")
            "* %?\nEntered on %T\n%i\n")
           ("t" "Todo" entry (file+headline "~/org/todo.org" "Tasks")
            "* TODO %?\n  %i\n  %a")
-          ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
+          ("j" "Journal" entry (file+olp+datetree my-org-journal-file)
            "* %?\nEntered on %U\n  %i\n  %a")
           ("w" "Webpage" entry (file+headline "~/org/refile.org" "Webpages")
            "* %:description\nEntered on %U\nSource: %:link\n\n%:initial%? %(progn (my-focus-emacs-window) \"\")")))
@@ -103,7 +106,7 @@
   ;; refile-targets
   (setq org-refile-targets (quote (("todo.org" :maxlevel . 1)
                                    ("someday.org" :level . 2)
-                                   ("journal.org" :maxlevel . 2)
+                                   (my-org-journal-file-basename :maxlevel . 2)
                                    (nil :maxlevel . 3))))
 
   ;; Need that in order for helm completion to work. From
@@ -152,8 +155,8 @@
   (setq org-clock-persist 'history)
   (org-clock-persistence-insinuate)
 
-  ;; To archive into a datetree into journal.org
-  (setq org-archive-location "~/org/journal.org::datetree/")
+  ;; To archive into a datetree into my journal file
+  (setq org-archive-location (format "%s::datetree/" my-org-journal-file))
 
   ;; org export for reveal.js presentations
   (require 'org-re-reveal)
