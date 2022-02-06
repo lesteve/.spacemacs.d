@@ -60,9 +60,11 @@ This function should only modify configuration layer settings."
      rust
      html
      yaml
+     lsp
      (python :variables
              python-test-runner 'pytest
-             python-backend 'anaconda
+             python-backend 'lsp
+             python-lsp-server 'pyright
              python-formatter 'black)
      ipython-notebook
      semantic
