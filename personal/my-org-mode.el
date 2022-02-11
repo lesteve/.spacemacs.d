@@ -239,9 +239,6 @@
     )
   (add-hook 'after-save-hook 'my-org-caldav-sync-hook)
 
-  ;; Calendar display similar to Google Calendar
-  (require 'calfw-org)
-
   ;; Content should not be indented when promoting/demoting the header
   (setq org-adapt-indentation nil)
 
