@@ -93,7 +93,8 @@
           ("j" "Journal" entry (file+olp+datetree my-org-journal-file)
            "* %?\nEntered on %U\n  %i\n  %a")
           ("w" "Webpage" entry (file+headline "~/org/refile.org" "Webpages")
-           "* %:description\nEntered on %U\nSource: %:link\n\n%:initial%? %(progn (my-focus-emacs-window) \"\")")))
+           "* %:description\nEntered on %U\nSource: %:link\n\n%:initial%? %(progn (my-focus-emacs-window) \"\")")
+          ("d" "From calfw" entry (file "~/org/zimbra-private.org")  "* %? \n%(cfw:org-capture-day)" :append t)))
 
   ;; to make a TODO item dependent of its subtrees items
   (setq org-enforce-todo-dependencies t)
@@ -307,4 +308,27 @@ Taken from https://stackoverflow.com/a/24643887"
           (:overtime
            (format "Overtime! %d minutes" (/ (org-pomodoro-remaining-seconds) 60))))
       ""))
+
+  ;; calfw for visual calendar inside emacs
+  (require 'calfw)
+  (require 'calfw-org)
+
+  (spacemacs/set-leader-keys "aoCd" 'cfw:open-org-calendar)
+
+  ;; auto-evilification removes useful vim-like shortcuts
+  (define-key cfw:calendar-mode-map (kbd "SPC") 'spacemacs-cmds)
+  (define-key cfw:calendar-mode-map (kbd "TAB") 'cfw:show-details-command)
+  (define-key cfw:calendar-mode-map (kbd "C-j") 'cfw:navi-next-item-command)
+  (define-key cfw:calendar-mode-map (kbd "C-k") 'cfw:navi-prev-item-command)
+  (define-key cfw:org-schedule-map (kbd "SPC") 'spacemacs-cmds)
+  (define-key cfw:org-schedule-map (kbd "TAB") 'cfw:org-open-agenda-day)
+  (define-key cfw:org-custom-map (kbd "SPC") 'spacemacs-cmds)
+  (define-key cfw:org-custom-map (kbd "TAB") 'cfw:org-open-agenda-day)
+
+  ;; org template to use for capture from calfw note the real info is in
+  ;; org-template. It seems you only need to say the template key (i.e. "d" in
+  ;; this case)
+  (setq cfw:org-capture-template '("d" "" entry (file nil)  ""))
+
+
 )
