@@ -62,6 +62,10 @@ This function should only modify configuration layer settings."
      yaml
      lsp
      (shell-scripts :variables shell-scripts-backend 'lsp)
+     (shell :variables
+            shell-default-shell 'vterm
+            shell-default-position 'right
+            shell-default-width 40)
      (python :variables
              python-test-runner 'pytest
              python-backend 'lsp
