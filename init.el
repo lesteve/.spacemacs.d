@@ -61,6 +61,7 @@ This function should only modify configuration layer settings."
      html
      yaml
      lsp
+     (shell-scripts :variables shell-scripts-backend 'lsp)
      (python :variables
              python-test-runner 'pytest
              python-backend 'lsp
