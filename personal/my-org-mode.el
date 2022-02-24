@@ -248,7 +248,7 @@
    '(
      (shell . t)
      (python . t)
-     (ipython . t)
+     (jupyter . t)
      (R . t)
      ))
 
