@@ -131,17 +131,6 @@
                                        ("DEFERRED" :foreground "forest green" :weight bold)
                                        ("PROJECT" :foreground "red" :weight bold))))
 
-  ;; ;; org-mode-hook
-  (require 'yasnippet)
-
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (auto-fill-mode t)
-              (make-variable-buffer-local 'yas/trigger-key)
-              (setq-local yas/trigger-key [tab])
-              (define-key yas/keymap [tab] 'yas/next-field-group)
-              ))
-
   ;; Encryption of tags crypt (e.g. for saving passwords and stuff)
   (require 'org-crypt)
   ;; Encrypt all entries before saving
