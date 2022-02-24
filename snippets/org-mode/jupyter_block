@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: jupyter block
+# key: jup
+# --
+#+BEGIN_SRC jupyter-python :session :display plain
+$0
+#+END_SRC

@@ -53,3 +53,6 @@
    )
 )
 (spacemacs/set-leader-keys "ao/" 'my-helm-org-rifle)
+
+;; Set yasnippets folder
+(setq auto-completion-private-snippets-directory "~/.spacemacs.d/snippets")
