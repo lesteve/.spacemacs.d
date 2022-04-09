@@ -79,6 +79,8 @@ This function should only modify configuration layer settings."
      cmake
      docker
      pass
+     dtrt-indent
+     react
      )
 
    ;; List of additional packages that will be installed without being
