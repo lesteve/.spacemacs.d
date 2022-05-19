@@ -271,15 +271,16 @@ Taken from https://stackoverflow.com/a/24643887"
     )
 
   ;; org-pomodoro settings
-  (require 'org-pomodoro)
-  (setq
-   alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil))))
-  (setq org-pomodoro-play-sounds nil)
-
-  ;; Uncomment this for quicker testing
-  ;; (setq
-  ;;  org-pomodoro-length 1
-  ;;  org-pomodoro-short-break-length 1)
+  (use-package org-pomodoro
+    :defer t
+    :init
+    (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil))))
+    (setq org-pomodoro-play-sounds nil)
+    ;; Uncomment this for quicker testing
+    ;; (setq
+    ;;  org-pomodoro-length 1
+    ;;  org-pomodoro-short-break-length 1)
+    )
 
   (defun my-org-pomodoro-info ()
     "Return info about pomodoro state. Adapted from https://colekillian.com/posts/org-pomodoro-and-polybar/"
