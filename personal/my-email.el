@@ -90,12 +90,15 @@
 
 
 ;;; HTML support
-(require 'mu4e-contrib)
-(setq mu4e-html2text-command 'mu4e-shr2text)
-(setq shr-color-visible-luminance-min 60)
-(setq shr-color-visible-distance-min 5)
-(setq shr-use-colors nil)
-(advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
+(use-package mu4e-contrib
+  :init
+  (setq mu4e-html2text-command 'mu4e-shr2text)
+  (setq shr-color-visible-luminance-min 60)
+  (setq shr-color-visible-distance-min 5)
+  (setq shr-use-colors nil)
+  (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
+  :defer t
+)
 
 ;;; Bookmarks
 (defun my-add-query-to-bookmark (query bookmark)
