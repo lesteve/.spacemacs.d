@@ -56,3 +56,6 @@
 
 ;; Set yasnippets folder
 (setq auto-completion-private-snippets-directory "~/.spacemacs.d/snippets")
+
+;; Set Monday as first day of the week in the calendar
+(setq calendar-week-start-day 1)
