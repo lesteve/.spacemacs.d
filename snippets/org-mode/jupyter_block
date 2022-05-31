@@ -2,6 +2,6 @@
 # name: jupyter block
 # key: jup
 # --
-#+BEGIN_SRC jupyter-python :session :display plain
+#+BEGIN_SRC jupyter-python :session py :display plain
 $0
 #+END_SRC
