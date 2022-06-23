@@ -1,4 +1,5 @@
 (use-package mu4e
+  :defer t
   :config
   ;;; Set up some common mu4e variables
   (setq mu4e-trash-folder "/Trash"
@@ -176,12 +177,11 @@
   ;; use imagemagick, if available
   (when (fboundp 'imagemagick-register-types)
     (imagemagick-register-types))
-
-  :defer t
   )
 
 ;; HTML support
 (use-package mu4e-contrib
+  :defer t
   :after mu4e
   :init
   (setq mu4e-html2text-command 'mu4e-shr2text)
@@ -189,5 +189,4 @@
   (setq shr-color-visible-distance-min 5)
   (setq shr-use-colors nil)
   (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
-  :defer t
 )
