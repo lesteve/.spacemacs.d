@@ -84,7 +84,6 @@
   ;;; Mail directory shortcuts
   (setq mu4e-maildir-shortcuts
         '(("/inria/Inbox" . ?i)
-          ("/inria/SED" . ?s)
           ("/ymail/Inbox" . ?y)
           ("/gmx/Inbox" . ?g)
           ("/outlook/Inbox" . ?t)
