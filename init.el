@@ -73,7 +73,6 @@ This function should only modify configuration layer settings."
              python-formatter 'black)
      ipython-notebook
      (mu4e :variables
-           mu4e-use-maildirs-extension t
            mu4e-installation-path "/usr/local/share/emacs/site-lisp/mu4e")
      ess
      cmake
