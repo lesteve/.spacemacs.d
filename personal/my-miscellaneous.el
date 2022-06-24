@@ -59,3 +59,7 @@
 
 ;; Set Monday as first day of the week in the calendar
 (setq calendar-week-start-day 1)
+
+;; Set prompt regexp for d d to work in vterm (otherwise it tries to delete the
+;; prompt and errors with Buffer is read-only)
+(setq term-prompt-regexp "^.+❯ *")
