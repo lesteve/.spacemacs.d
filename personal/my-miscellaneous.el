@@ -57,9 +57,29 @@
 ;; Set yasnippets folder
 (setq auto-completion-private-snippets-directory "~/.spacemacs.d/snippets")
 
-;; Set Monday as first day of the week in the calendar
-(setq calendar-week-start-day 1)
-
 ;; Set prompt regexp for d d to work in vterm (otherwise it tries to delete the
 ;; prompt and errors with Buffer is read-only)
 (setq term-prompt-regexp "^.+❯ *")
+
+;; Set Monday as first day of the week in the calendar
+(setq calendar-week-start-day 1)
+
+;; Calendar holidays
+(setq holiday-french-holidays
+      `((holiday-fixed 1 1 "New Year's day")
+	(holiday-fixed 5 1 "Labour day")
+	(holiday-fixed 5 8 "Victory in Europe day")
+	(holiday-fixed 7 14 "Bastille day")
+	(holiday-fixed 8 15 "Assumption")
+	(holiday-fixed 11 1 "All Saint's day")
+	(holiday-fixed 11 11 "Armistice day")
+	(holiday-fixed 12 25 "Christmas")
+  ; variable holidays
+	(holiday-easter-etc 0 "Easter")
+        (holiday-easter-etc 1 "Easter Monday")
+        (holiday-easter-etc 39 "Ascension day")
+        (holiday-easter-etc 49 "Pentecost")
+        (holiday-easter-etc 50 "Whit Monday")
+	))
+
+(setq calendar-holidays holiday-french-holidays)
