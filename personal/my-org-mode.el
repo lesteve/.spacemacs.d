@@ -247,6 +247,10 @@
   ;; Do not indent by 2 spaces inside src blocks
   (setq org-src-preserve-indentation t)
 
+  ;; disable completion on newline in org-babel src blocks
+  ;; https://github.com/syl20bnr/spacemacs/issues/13465#issuecomment-620684283
+  (setq org-src-tab-acts-natively nil)
+
   ;; org-capture in full frame from capturing from anywhere
   (require 'noflet)
 
@@ -316,6 +320,5 @@ Taken from https://stackoverflow.com/a/24643887"
   ;; org-template. It seems you only need to say the template key (i.e. "d" in
   ;; this case)
   (setq cfw:org-capture-template '("d" "" entry (file nil)  ""))
-
 
 )
