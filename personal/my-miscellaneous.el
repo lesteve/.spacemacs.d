@@ -22,10 +22,19 @@
 (global-disable-mouse-mode)
 ;; Need this to disable mouse in evil-mode. It just happens too often that I
 ;; touch the touchpad while typing, which causes to insert text somewhere I
-;; don't want. For some reason I could not get it to work with
-;; evil-motion-state-map and had to use evil-normal-state-map ...
-(define-key evil-normal-state-map [down-mouse-1] 'ignore)
-(define-key evil-normal-state-map [mouse-1] 'ignore)
+;; don't want. Taken from https://github.com/purcell/disable-mouse/issues/1#issuecomment-449902949
+(mapc #'disable-mouse-in-keymap
+      (list evil-motion-state-map
+            evil-normal-state-map
+            evil-visual-state-map
+            evil-insert-state-map))
+;; Not sure why but I need this on top ...
+(evil-define-key 'normal 'custom-mode-map [down-mouse-1] 'disable-mouse--handle)
+
+;; (define-key evil-motion-state-map [down-mouse-1] 'silence)
+;; (define-key evil-motion-state-map [mouse-1] 'silence)
+;; (define-key evil-normal-state-map [down-mouse-1] 'ignore)
+;; (define-key evil-normal-state-map [mouse-1] 'ignore)
 
 ;; Prefer splitting horizontally i.e. windows side-by-side rather than on top
 ;; of each other. This is useful for magit status or org-agenda.
