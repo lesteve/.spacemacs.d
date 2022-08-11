@@ -53,3 +53,6 @@
 ;; If you prefer fuzzy matching
 (setq helm-swoop-use-fuzzy-match t)
 
+;; Find matches in .* files
+(require 'helm-ag)
+(setq helm-ag-base-command (concat helm-ag-base-command " --hidden"))
