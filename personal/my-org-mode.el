@@ -321,4 +321,6 @@ Taken from https://stackoverflow.com/a/24643887"
   ;; this case)
   (setq cfw:org-capture-template '("d" "" entry (file nil)  ""))
 
+  ;; use flameshot for capturing screenshot from org
+  (setq org-download-screenshot-method "flameshot gui --raw > %s")
 )
