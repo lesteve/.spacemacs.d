@@ -92,3 +92,8 @@
 	))
 
 (setq calendar-holidays holiday-french-holidays)
+
+;; Disable saving undo history. I don't really use this feature and it takes
+;; some time when saving file (e.g. zimbra synced calendar files)
+(with-eval-after-load 'undo-tree
+  (setq undo-tree-auto-save-history nil))
