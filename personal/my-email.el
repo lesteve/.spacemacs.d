@@ -172,6 +172,19 @@
     "d" 'mu4e-headers-mark-for-delete
   )
 
+  ;; quick update shortcut to only fetch update from all my INBOX mailboxes
+  ;; (useful when getting a verification code by email that is valid for a
+  ;; short time)
+  (defun my-mu4e-quick-update ()
+    (interactive)
+    (let (
+          (mu4e-get-mail-command "mbsync inria:INBOX outlook:INBOX gmx:INBOX ymail:INBOX"))
+      (mu4e-update-mail-and-index nil)
+      )
+    )
+
+  (define-key mu4e-main-mode-map (kbd "U") 'my-mu4e-quick-update)
+
   ;; enable inline images
   (setq mu4e-view-show-images t)
   ;; use imagemagick, if available
