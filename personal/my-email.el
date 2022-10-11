@@ -143,33 +143,12 @@
   ;; email to be encoded with format=flowed.
   (setq mml-enable-flowed nil)
 
-  ;; In an ideal world I would do it by setting spacemacs-evil layer variables as
-  ;; shown in
-  ;; https://github.com/syl20bnr/spacemacs/blob/develop/layers/+spacemacs/spacemacs-evil/README.org#note-about-evil-collection
-  ;; my feeling is that the evil-collection init happens early and that the spacemacs mu4e keybindings override them
-  (evil-collection-mu4e-setup)
-
-  ;; add shortcut for visual-line-mode (useful for emails with long lines)
-  (evil-collection-define-key 'normal 'mu4e-view-mode-map
-    "zv" 'visual-line-mode
-  )
+  ;; Custom shortcuts for mu4e
+  ;; -------------------------
 
   (defun my-mu4e-delete-thread ()
     (interactive)
     (mu4e-headers-mark-thread nil '(delete))
-  )
-
-  (evil-collection-define-key 'normal 'mu4e-headers-mode-map
-    ;; override j/k to go up and down in headers when having both headers and
-    ;; message view. With evil-collection j/k is the same as C-j/k which is
-    ;; slightly weird. The first j in the headers switches focus to the message
-    ;; and the next j moves up in the message
-    "j" 'evil-next-line
-    "k" 'evil-previous-line
-    ;; D deletes whole thread (this is almost always what I want)
-    "D" 'my-mu4e-delete-thread
-    ;; d deletes message (by default d moves to Trash but I never use this)
-    "d" 'mu4e-headers-mark-for-delete
   )
 
   ;; quick update shortcut to only fetch update from all my INBOX mailboxes
@@ -183,14 +162,37 @@
       )
     )
 
-  (define-key mu4e-main-mode-map (kbd "U") 'my-mu4e-quick-update)
+  ;; In an ideal world I would do it by setting spacemacs-evil layer variables as
+  ;; shown in
+  ;; https://github.com/syl20bnr/spacemacs/blob/develop/layers/+spacemacs/spacemacs-evil/README.org#note-about-evil-collection
+  ;; my feeling is that the evil-collection init happens early and that the spacemacs mu4e keybindings override them
+  (evil-collection-mu4e-setup)
 
-  ;; enable inline images
-  (setq mu4e-view-show-images t)
-  ;; use imagemagick, if available
-  (when (fboundp 'imagemagick-register-types)
-    (imagemagick-register-types))
-  )
+  (evil-collection-define-key 'normal 'mu4e-main-mode-map
+    "p" 'my-mu4e-quick-update
+    (kbd "C-S-p") 'my-mu4e-quick-update
+    )
+
+  (evil-collection-define-key 'normal 'mu4e-headers-mode-map
+    ;; override j/k to go up and down in headers when having both headers and
+    ;; message view. With evil-collection j/k is the same as C-j/k which is
+    ;; slightly weird. The first j in the headers switches focus to the message
+    ;; and the next j moves up in the message
+    "j" 'evil-next-line
+    "k" 'evil-previous-line
+    ;; D deletes whole thread (this is almost always what I want)
+    "D" 'my-mu4e-delete-thread
+    ;; d deletes message (by default d moves to Trash but I never use this)
+    "d" 'mu4e-headers-mark-for-delete
+    (kbd "C-S-p") 'my-mu4e-quick-update
+    )
+
+  ;; add shortcut for visual-line-mode (useful for emails with long lines)
+  (evil-collection-define-key 'normal 'mu4e-view-mode-map
+    "zv" 'visual-line-mode
+    (kbd "C-S-p") 'my-mu4e-quick-update
+    )
+)
 
 ;; HTML support
 (use-package mu4e-contrib
@@ -202,4 +204,5 @@
   (setq shr-color-visible-distance-min 5)
   (setq shr-use-colors nil)
   (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
-)
+  )
+
