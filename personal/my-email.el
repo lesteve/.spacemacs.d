@@ -206,3 +206,20 @@
   (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
   )
 
+;; Sometimes, not sure when, I get the following error
+;; error in process filter: Error 111: failed to open store @ /home/lesteve/.cache/mu/xapian: Unable to get write lock on /home/lesteve/.cache/mu/xapian: already locked
+;; This is probably similar to
+;; https://github.com/djcb/mu/issues/8#issuecomment-4672468, but having a
+;; work-around inside emacs makes sense
+(defun my-mu4e-restart ()
+  (interactive)
+  (progn
+    (mu4e-quit)
+    ;; important to wait here otherwise you actually create the same error you
+    ;; were trying to solve
+    (shell-command "killall --signal INT --wait mu")
+    (mu4e)
+    )
+  )
+
+(spacemacs/set-leader-keys "aer" 'my-mu4e-restart)
