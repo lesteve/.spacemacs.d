@@ -170,7 +170,8 @@
           (:calendar-id "private"
                         :inbox "~/org/zimbra-private.org")))
 
-  (setq org-icalendar-timezone "Europe/Paris")
+  ;; Timezone of the remote calendars
+  (setq org-icalendar-timezone "UTC")
   ;; This makes sure to-do items as a category can show up on the calendar
   (setq org-icalendar-include-todo t)
   ;; This ensures all org "deadlines" show up, and show up as due dates
