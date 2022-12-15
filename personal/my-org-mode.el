@@ -21,8 +21,13 @@
   ;; diary functionalities (eg holidays show up in agenda)
   (setq org-agenda-include-diary t)
 
+  (defun my-org-agenda-to-appt ()
+    (interactive)
+    ;; Make sure to refresh appt to avoid getting notifications about items
+    ;; whose time has changed or which have been unscheduled
+    (org-agenda-to-appt t))
   ;; appt functionalities (appointment reminder)
-  (run-at-time nil 900 'org-agenda-to-appt)
+  (run-at-time nil 300 'my-org-agenda-to-appt)
   (appt-activate t)
 
   ;; 10 and 0 minutes remaining warnings
@@ -30,7 +35,7 @@
   (setq appt-display-interval 10)
 
   ;; Update appt each time agenda opened.
-  ;; (add-hook 'org-finalize-agenda-hook 'my-org-agenda-to-appt)
+  (add-hook 'org-finalize-agenda-hook 'my-org-agenda-to-appt)
 
   ;; This is for custom appt notifications
   (setq appt-display-format 'window)
