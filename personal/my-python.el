@@ -33,6 +33,12 @@
 ;; conda environment settings
 (setenv "WORKON_HOME" (expand-file-name "~/miniconda3/envs"))
 
+;; Do not watch Pyodide cross-build folders
+(with-eval-after-load 'lsp-mode
+  (setq lsp-file-watch-ignored-directories
+        (append lsp-file-watch-ignored-directories '("[/\\\\]\\.pyodide-xbuildenv\\'")))
+)
+
 ;; Taken from
 ;; https://github.com/millejoh/emacs-ipython-notebook/blob/master/lisp/zeroein.el
 ;; This significantly improves completion in the ipython notebook
