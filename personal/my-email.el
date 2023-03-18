@@ -221,6 +221,7 @@
     ;; were trying to solve
     (shell-command "killall --signal INT --wait mu")
     (mu4e-quit)
+    ;; Sleeping a bit seems to help, don't ask me why ...
     (sleep-for 0.2)
     (mu4e)
     )
