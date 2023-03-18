@@ -214,10 +214,14 @@
 (defun my-mu4e-restart ()
   (interactive)
   (progn
-    (mu4e-quit)
+    ;; Helps keeping a clean layout when restarting and having both headers and
+    ;; view window
+    (delete-other-windows)
     ;; important to wait here otherwise you actually create the same error you
     ;; were trying to solve
     (shell-command "killall --signal INT --wait mu")
+    (mu4e-quit)
+    (sleep-for 0.2)
     (mu4e)
     )
   )
