@@ -97,3 +97,17 @@
 ;; some time when saving file (e.g. zimbra synced calendar files)
 (with-eval-after-load 'undo-tree
   (setq undo-tree-auto-save-history nil))
+
+;; Only consider stdout in emacs-jupyter jupyter-command to work-around issue
+;; with Python 3.11, see https://github.com/nnicandro/emacs-jupyter/pull/423.
+;; This uses (require jupyter) because I was not able to make it work with
+;; with-eval-after-load
+(require 'jupyter)
+(defun jupyter-command (&rest args)
+  "Redefine jupyter-command from emacs-jupyter jupyter-env.el to ignore stderr.
+
+The only difference is to use '(t nil) instead of t to discard stderr.
+"
+  (with-temp-buffer
+    (when (zerop (apply #'process-file "jupyter" nil '(t nil) nil args))
+      (string-trim-right (buffer-string)))))
