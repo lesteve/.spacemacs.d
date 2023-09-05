@@ -5,7 +5,6 @@
 ;; details.
 (with-eval-after-load 'org
 
-  (require 'org-install)
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
   (setq org-support-shift-select t)
