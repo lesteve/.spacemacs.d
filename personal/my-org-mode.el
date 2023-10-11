@@ -218,21 +218,6 @@
                 (my-org-caldav-sync-with-delay 300))))
 
 
-  ;; org-caldav-sync on calendar files save. Better alternative than doing it
-  ;; as a file local variable (i.e. file comment) because the variable is risky
-  ;; you need to confirm each time opening the file.
-  (defun my-org-caldav-sync-hook ()
-    (when (string-match-p "zimbra-.*\.org" (file-name-nondirectory (buffer-file-name)))
-      (progn
-        (my-org-caldav-sync)
-        ;; org-caldav-sync can change the content of the file (e.g. by adding
-        ;; an id to an event so you need to save again
-        (save-buffer)
-        )
-      )
-    )
-  (add-hook 'after-save-hook 'my-org-caldav-sync-hook)
-
   ;; Content should not be indented when promoting/demoting the header
   (setq org-adapt-indentation nil)
 
