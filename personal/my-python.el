@@ -31,7 +31,7 @@
 (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
 
 ;; conda environment settings
-(setenv "WORKON_HOME" (expand-file-name "~/miniconda3/envs"))
+(setenv "WORKON_HOME" (expand-file-name "~/micromamba/envs"))
 
 ;; Do not watch Pyodide cross-build folders
 (with-eval-after-load 'lsp-mode
