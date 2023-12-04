@@ -200,7 +200,6 @@
     "Timer that `org-caldav-push-timer' used to reschedule itself, or nil.")
   (defun my-org-caldav-sync ()
     (org-caldav-sync)
-    (message (buffer-name))
     (if (eq org-caldav-sync-result nil)
         (kill-buffer "*org caldav sync result*")))
 
