@@ -40,6 +40,11 @@
 ;; Split direction. 'split-window-vertically or 'split-window-horizontally
 (setq helm-swoop-split-direction 'split-window-vertically)
 
+;; Use split-width-threshold to decide whether to split horizontally when using
+;; other-window in helm (e.g. by using S-Enter rather than Enter). In my setup,
+;; that means favoring horizontal splitting
+(setq helm-window-prefer-horizontal-split 'decide)
+
 ;; If nil, you can slightly boost invoke speed in exchange for text color
 (setq helm-swoop-speed-or-color nil)
 
