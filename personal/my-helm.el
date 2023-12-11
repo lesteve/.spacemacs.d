@@ -61,3 +61,13 @@
 ;; Find matches in .* files
 (require 'helm-ag)
 (setq helm-ag-base-command (concat helm-ag-base-command " --hidden"))
+
+;; Taken from https://github.com/emacsorphanage/helm-ag/issues/388. Stop-gap
+;; solution until https://github.com/syl20bnr/spacemacs/issues/16200 is fixed.
+;; Probably the most promising long-term option is
+;; https://github.com/emacsorphanage/helm-ag/pull/394.
+(defun helm-ag--construct-ignore-option (pattern)
+  "Not documented, PATTERN."
+  (concat "--glob=!" pattern))
+
+
