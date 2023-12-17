@@ -5,6 +5,10 @@
 ;; helm from https://github.com/emacs-helm/helm
 (require 'helm)
 
+;; More intuitive to use C-j/C-k to go up/down even when it is not the same
+;; source, rather than C-o to go to next source
+(setq helm-move-to-line-cycle-in-source nil)
+
 ;; Locate the helm-swoop folder to your path
 (require 'helm-swoop)
 
@@ -69,5 +73,3 @@
 (defun helm-ag--construct-ignore-option (pattern)
   "Not documented, PATTERN."
   (concat "--glob=!" pattern))
-
-
