@@ -62,6 +62,10 @@
 ;; If you prefer fuzzy matching
 (setq helm-swoop-use-fuzzy-match t)
 
+;; Allow to have more characters in buffer name (20 by default). Since I split
+;; vertically I have plenty of space.
+(setq helm-buffer-max-length 30)
+
 ;; Find matches in .* files
 (require 'helm-ag)
 (setq helm-ag-base-command (concat helm-ag-base-command " --hidden"))
