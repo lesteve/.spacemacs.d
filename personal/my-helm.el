@@ -70,6 +70,10 @@
 (require 'helm-ag)
 (setq helm-ag-base-command (concat helm-ag-base-command " --hidden"))
 
+;; ripgrep exit status 2 is partial success, following
+;; https://github.com/emacsorphanage/helm-ag?tab=readme-ov-file#ripgrep
+(setq helm-ag-success-exit-status '(0 2))
+
 ;; Taken from https://github.com/emacsorphanage/helm-ag/issues/388. Stop-gap
 ;; solution until https://github.com/syl20bnr/spacemacs/issues/16200 is fixed.
 ;; Probably the most promising long-term option is
