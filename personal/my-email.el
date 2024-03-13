@@ -133,7 +133,7 @@
   (setq mu4e-confirm-quit nil)
 
   ;;; Do not add my email address when replying to all
-  (setq mu4e-compose-dont-reply-to-self t)
+  (setq message-dont-reply-to-names #'mu4e-personal-or-alternative-address-p)
 
   ;; Disable format=flowed. Giving up on devices that reflow content because it
   ;; seems to cumbersome at the time of writing. mu4e-compose-format-flowed is
@@ -185,13 +185,27 @@
     ;; d deletes message (by default d moves to Trash but I never use this)
     "d" 'mu4e-headers-mark-for-delete
     (kbd "C-S-p") 'my-mu4e-quick-update
+    ;; mu 1.12 changed R to be reply only to sender, W should be reply all but
+    ;; evil-collection overrides it
+    "W" 'mu4e-compose-wide-reply
+    "cw" 'mu4e-compose-wide-reply
     )
 
   ;; add shortcut for visual-line-mode (useful for emails with long lines)
   (evil-collection-define-key 'normal 'mu4e-view-mode-map
     "zv" 'visual-line-mode
     (kbd "C-S-p") 'my-mu4e-quick-update
+    ;; mu 1.12 changed R to be reply only to sender, W should be reply all but
+    ;; evil-collection overrides it
+    "W" 'mu4e-compose-wide-reply
+    "cw" 'mu4e-compose-wide-reply
     )
+
+  (evil-collection-define-key 'normal 'mu4e-view-mode-map
+    "zv" 'visual-line-mode
+    (kbd "C-S-p") 'my-mu4e-quick-update
+    )
+
 )
 
 ;; HTML support
@@ -228,3 +242,4 @@
   )
 
 (spacemacs/set-leader-keys "aer" 'my-mu4e-restart)
+
