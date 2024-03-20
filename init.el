@@ -89,7 +89,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(org-caldav jupyter disable-mouse visual-fill-column calfw calfw-org noflet code-review meson-mode)
+   dotspacemacs-additional-packages '(org-caldav jupyter disable-mouse visual-fill-column calfw calfw-org noflet code-review meson-mode khalel)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()

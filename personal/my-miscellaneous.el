@@ -111,3 +111,8 @@ The only difference is to use '(t nil) instead of t to discard stderr.
   (with-temp-buffer
     (when (zerop (apply #'process-file "jupyter" nil '(t nil) nil args))
       (string-trim-right (buffer-string)))))
+
+;; Useful for khalel that has buffer-read-only at the beginning of the imported
+;; org file. This is here rather than in my-org-mode.el because my-org-mode.el
+;; is only loaded after org is loaded.
+(push (cons 'buffer-read-only '1) safe-local-variable-values)

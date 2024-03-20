@@ -74,7 +74,7 @@
 
   ;; files included in the agenda
   (setq org-agenda-files
-        (list "~/org/todo.org" "~/org/zimbra-calendar.org" "~/org/zimbra-private.org"))
+        (list "~/org/todo.org" "~/org/khal-calendar.org"))
 
   ;; remember functionalities (to quickly type notes when they pop out in your mind)
   (setq org-default-notes-file "~/org/notes.org")
@@ -163,59 +163,6 @@
   (add-hook 'org-shiftleft-final-hook 'windmove-left)
   (add-hook 'org-shiftdown-final-hook 'windmove-down)
   (add-hook 'org-shiftright-final-hook 'windmove-right)
-
-  ;;; calendar synchronization
-  (require 'org-caldav)
-
-  (setq org-caldav-url "https://zimbra.inria.fr/dav/lesteve")
-  (setq org-caldav-calendars
-        '((:calendar-id "Calendar"
-                        :inbox "~/org/zimbra-calendar.org")
-          (:calendar-id "private"
-                        :inbox "~/org/zimbra-private.org")))
-
-  ;; Timezone of the remote calendars
-  (setq org-icalendar-timezone "UTC")
-  ;; This makes sure to-do items as a category can show up on the calendar
-  (setq org-icalendar-include-todo t)
-  ;; This ensures all org "deadlines" show up, and show up as due dates
-  (setq org-icalendar-use-deadline '(event-if-todo event-if-not-todo todo-due))
-  ;; This ensures "scheduled" org items show up, and show up as start times
-  (setq org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo))
-  ;; Ask before deleting an entry in the calendar
-  (setq org-caldav-delete-calendar-entries 'ask)
-  ;; When synchronizing org files between different computers, you want to have
-  ;; the sync state synchronized too
-  (setq org-caldav-save-directory "~/org")
-  ;; same thing for org-caldav-backup-file
-  (setq org-caldav-backup-file "~/org/org-caldav-backup.org")
-
-  ;; org-caldav-sync-with-delay is taken from
-  ;; https://www.reddit.com/r/orgmode/comments/8rl8ep/making_orgcaldav_useable/e0sb5j0/
-  ;; it waits until emacs has been idle for "secs" seconds before syncing. The
-  ;; delay is important because the caldav-sync can take five or ten seconds,
-  ;; which would be painful if it did that right at save. This way it just
-  ;; waits until you've been idle for a while to avoid disturbing the user.
-  (defvar my-org-caldav-sync-timer nil
-    "Timer that `org-caldav-push-timer' used to reschedule itself, or nil.")
-  (defun my-org-caldav-sync ()
-    (org-caldav-sync)
-    (if (eq org-caldav-sync-result nil)
-        (kill-buffer "*org caldav sync result*")))
-
-  (defun my-org-caldav-sync-with-delay (secs)
-    (when my-org-caldav-sync-timer
-      (cancel-timer my-org-caldav-sync-timer))
-    (setq my-org-caldav-sync-timer
-          (run-with-idle-timer
-           (* 1 secs) nil 'my-org-caldav-sync)))
-
-  ;; Add the delayed save hook with a five minute idle timer
-  (add-hook 'after-save-hook
-            (lambda ()
-              (when (eq major-mode 'org-mode)
-                (my-org-caldav-sync-with-delay 300))))
-
 
   ;; Content should not be indented when promoting/demoting the header
   (setq org-adapt-indentation nil)
@@ -312,4 +259,15 @@ Taken from https://stackoverflow.com/a/24643887"
 
   ;; use flameshot for capturing screenshot from org
   (setq org-download-screenshot-method "flameshot gui --raw > %s")
+
+  ;; khal/vdirsyncer setup
+  (require 'khalel)
+  (setq khalel-khal-command (expand-file-name "~/micromamba/envs/khal/bin/khal"))
+  (setq khalel-vdirsyncer-command "~/micromamba/envs/khal/bin/vdirsyncer")
+  (setq khalel-import-org-file (concat org-directory "/" "khal-calendar.org"))
+  (setq khalel-default-calendar "private")
+  (setq khalel-import-org-file-confirm-overwrite nil)
+  (setq khalel-import-start-date "-30d")
+  (setq khalel-import-end-date "+180d")
+  (khalel-add-capture-template)
 )
