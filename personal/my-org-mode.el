@@ -270,4 +270,7 @@ Taken from https://stackoverflow.com/a/24643887"
   (setq khalel-import-start-date "-30d")
   (setq khalel-import-end-date "+180d")
   (khalel-add-capture-template)
+  ;; Periodically sync calendars when idle for 5 minutes
+  (run-with-idle-timer 300 t 'khalel-import-events)
+
 )
