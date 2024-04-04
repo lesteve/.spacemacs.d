@@ -116,3 +116,19 @@ The only difference is to use '(t nil) instead of t to discard stderr.
 ;; org file. This is here rather than in my-org-mode.el because my-org-mode.el
 ;; is only loaded after org is loaded.
 (push (cons 'buffer-read-only '1) safe-local-variable-values)
+
+;; Easy switch to todo.org headline. I put it here so that it is accessible
+;; even if I have not opened any org file yet
+(defun my-todo-headings-switch ()
+  (interactive)
+  (let*
+    ((todo-basename "todo.org")
+    (todo-filename (concat org-directory "/" todo-basename))
+    )
+  (unless (get-buffer todo-basename)
+    (find-file todo-filename)
+    )
+  (switch-to-buffer todo-basename)
+  (spacemacs/helm-jump-in-buffer)
+))
+(spacemacs/set-leader-keys "bt" 'my-todo-headings-switch)
