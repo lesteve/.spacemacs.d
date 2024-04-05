@@ -122,14 +122,11 @@ The only difference is to use '(t nil) instead of t to discard stderr.
 (defun my-todo-switch ()
   (interactive)
   (let*
-    ((todo-basename "todo.org")
-    (todo-filename (concat org-directory "/" todo-basename))
-    )
-  (unless (get-buffer todo-basename)
+      ((todo-basename "todo.org")
+       (todo-filename (concat org-directory "/" todo-basename))
+       )
     (find-file todo-filename)
-    )
-  (switch-to-buffer todo-basename)
-))
+    ))
 
 (defun my-todo-headings-switch ()
   (interactive)
