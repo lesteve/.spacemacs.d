@@ -119,7 +119,7 @@ The only difference is to use '(t nil) instead of t to discard stderr.
 
 ;; Easy switch to todo.org headline. I put it here so that it is accessible
 ;; even if I have not opened any org file yet
-(defun my-todo-headings-switch ()
+(defun my-todo-switch ()
   (interactive)
   (let*
     ((todo-basename "todo.org")
@@ -129,6 +129,12 @@ The only difference is to use '(t nil) instead of t to discard stderr.
     (find-file todo-filename)
     )
   (switch-to-buffer todo-basename)
-  (spacemacs/helm-jump-in-buffer)
 ))
-(spacemacs/set-leader-keys "bt" 'my-todo-headings-switch)
+
+(defun my-todo-headings-switch ()
+  (interactive)
+  (my-todo-switch)
+  (spacemacs/helm-jump-in-buffer)
+  )
+(spacemacs/set-leader-keys "bt" 'my-todo-switch)
+(spacemacs/set-leader-keys "bj" 'my-todo-headings-switch)
