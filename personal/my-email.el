@@ -10,8 +10,8 @@
         mu4e-view-show-images t
         mu4e-view-show-addresses t)
 
-  (setq my-work-query "AND (maildir:/inria/ OR maildir:/ymail/)")
-  (setq my-work-folder-regex "inria\\|ymail")
+  (setq my-work-query "AND (maildir:/inria/ OR maildir:/ymail/ OR maildir:/probabl/)")
+  (setq my-work-folder-regex "inria\\|ymail\\|probabl")
   (setq my-personal-query "AND (maildir:/gmx/ OR maildir:/outlook/)")
   (setq my-personal-folder-regex "gmx\\|outlook")
 
@@ -41,6 +41,19 @@
                     (user-full-name . "Loïc Estève")
                     (mu4e-sent-folder . "/ymail/Sent")
                     (mu4e-drafts-folder . "/ymail/Draft"))
+            :enter-func (lambda () (my-context-enter-func my-work-query my-work-folder-regex))
+            )
+          ,(make-mu4e-context
+            :name "probabl"
+            :match-func (lambda (msg)
+                          (when msg
+                            (mu4e-message-contact-field-matches msg
+                                                                '(:to :cc :bcc :from)
+                                                                "loic@probabl.ai")))
+            :vars '((user-mail-address . "loic@probabl.ai")
+                    (user-full-name . "Loïc Estève")
+                    (mu4e-sent-folder . "/probabl/[Gmail]/Sent Mail")
+                    (mu4e-drafts-folder . "/probabl/[Gmail]/Drafts"))
             :enter-func (lambda () (my-context-enter-func my-work-query my-work-folder-regex))
             )
           ,(make-mu4e-context
@@ -86,6 +99,7 @@
   (setq mu4e-maildir-shortcuts
         '(("/inria/Inbox" . ?i)
           ("/ymail/Inbox" . ?y)
+          ("/probabl/Inbox" . ?p)
           ("/gmx/Inbox" . ?g)
           ("/outlook/Inbox" . ?t)
           ))
@@ -157,7 +171,7 @@
   (defun my-mu4e-quick-update ()
     (interactive)
     (let (
-          (mu4e-get-mail-command "mbsync inria:INBOX outlook:INBOX gmx:INBOX ymail:INBOX"))
+          (mu4e-get-mail-command "mbsync inria:INBOX outlook:INBOX gmx:INBOX ymail:INBOX probabl:INBOX"))
       (mu4e-update-mail-and-index nil)
       )
     )
