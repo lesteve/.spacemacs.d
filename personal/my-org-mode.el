@@ -265,7 +265,7 @@ Taken from https://stackoverflow.com/a/24643887"
   (setq khalel-khal-command (expand-file-name "~/micromamba/envs/khal/bin/khal"))
   (setq khalel-vdirsyncer-command "~/micromamba/envs/khal/bin/vdirsyncer")
   (setq khalel-import-org-file (concat org-directory "/" "khal-calendar.org"))
-  (setq khalel-default-calendar "private")
+  (setq khalel-default-calendar "personal")
   (setq khalel-import-org-file-confirm-overwrite nil)
   (setq khalel-import-start-date "-30d")
   (setq khalel-import-end-date "+180d")
