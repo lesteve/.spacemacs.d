@@ -171,7 +171,7 @@
   (defun my-mu4e-quick-update ()
     (interactive)
     (let (
-          (mu4e-get-mail-command "mbsync inria:INBOX outlook:INBOX gmx:INBOX ymail:INBOX probabl:INBOX"))
+          (mu4e-get-mail-command "mbsync inria:INBOX outlook:INBOX gmx:INBOX ymail:INBOX ymail:Bulk probabl:INBOX"))
       (mu4e-update-mail-and-index nil)
       )
     )
