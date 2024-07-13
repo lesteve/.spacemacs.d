@@ -38,13 +38,3 @@
   (setq lsp-file-watch-ignored-directories
         (append lsp-file-watch-ignored-directories '("[/\\\\]\\.pyodide-xbuildenv\\'")))
 )
-
-;; Taken from
-;; https://github.com/millejoh/emacs-ipython-notebook/blob/master/lisp/zeroein.el
-;; This significantly improves completion in the ipython notebook
-;; buffers. Otherwise . opens a minibuffer to do the completion which
-;; is really crap
-;; Disabling this 2018-05-11 because spacemacs uses company (and not
-;; auto-complete) by default
-;; (require 'auto-complete-config)
-;; (ac-config-default)
