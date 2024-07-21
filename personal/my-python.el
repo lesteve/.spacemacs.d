@@ -21,16 +21,6 @@
       python-shell-interpreter-args
       "-i --simple-prompt --matplotlib --InteractiveShell.display_page=True")
 
-;; emacs ipython notebook
-(require 'ein)
-
-;; auto-complete for ein
-(setq ein:use-auto-complete-superpack t)
-;; (setq ein:use-smartrep t)
-
-;; from the doc
-(add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
-
 ;; conda environment settings
 (setenv "WORKON_HOME" (expand-file-name "~/micromamba/envs"))
 
