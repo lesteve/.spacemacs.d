@@ -30,8 +30,7 @@
   (setq
    lsp-file-watch-ignored-directories
    (append lsp-file-watch-ignored-directories
-           '("[/\\\\]\\.pyodide-xbuildenv\\'" "[/\\\\]\\.pyodide-venv\\'" "[/\\\\]build\\'")))
-)
+           '("[/\\\\]\\.pyodide-xbuildenv\\'" "[/\\\\]\\.pyodide-venv\\'" "[/\\\\]build\\'"))))
 
 ;; 1000 by default let's raise it a bit to avoid the warnings and see what
 ;; happens
@@ -39,3 +38,20 @@
 
 ;; better integration with code-cells you see code + output in the Jupyter REPL
 (setq jupyter-repl-echo-eval-p t)
+
+;; better code-cells binding
+(with-eval-after-load 'code-cells
+  (let ((map code-cells-mode-map))
+    (define-key map (kbd "C-k") 'code-cells-backward-cell)
+    (define-key map [remap evil-backward-section-begin] 'code-cells-backward-cell)
+    (define-key map (kbd "C-j") 'code-cells-forward-cell)
+    (define-key map [remap evil-forward-section-begin] 'code-cells-forward-cell)
+    (define-key map (kbd "C-<return>") 'code-cells-eval)
+    (define-key map [remap evil-ret] 'my-eval-and-next-cell)
+    (spacemacs/set-leader-keys-for-minor-mode 'code-cells-mode
+      "," 'my-eval-and-next-cell)))
+
+(defun my-eval-and-next-cell ()
+  (interactive)
+  (call-interactively 'code-cells-eval)
+  (code-cells-forward-cell 1))
