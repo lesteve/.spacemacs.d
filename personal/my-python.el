@@ -37,3 +37,5 @@
 ;; happens
 (setq lsp-file-watch-threshold 3000)
 
+;; better integration with code-cells you see code + output in the Jupyter REPL
+(setq jupyter-repl-echo-eval-p t)
