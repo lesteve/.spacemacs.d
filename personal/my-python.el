@@ -18,7 +18,8 @@
 
 ;; Use ipython rather than plain python for the python shell
 (setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "-i --simple-prompt --matplotlib")
+      python-shell-interpreter-args
+      "-i --simple-prompt --matplotlib --InteractiveShell.display_page=True")
 
 ;; emacs ipython notebook
 (require 'ein)
