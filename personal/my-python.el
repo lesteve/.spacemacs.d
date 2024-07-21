@@ -24,8 +24,16 @@
 ;; conda environment settings
 (setenv "WORKON_HOME" (expand-file-name "~/micromamba/envs"))
 
-;; Do not watch Pyodide cross-build folders
+;; Do not watch Pyodide cross-build folders, Pyodide venv or Meson build
+;; folders
 (with-eval-after-load 'lsp-mode
-  (setq lsp-file-watch-ignored-directories
-        (append lsp-file-watch-ignored-directories '("[/\\\\]\\.pyodide-xbuildenv\\'")))
+  (setq
+   lsp-file-watch-ignored-directories
+   (append lsp-file-watch-ignored-directories
+           '("[/\\\\]\\.pyodide-xbuildenv\\'" "[/\\\\]\\.pyodide-venv\\'" "[/\\\\]build\\'")))
 )
+
+;; 1000 by default let's raise it a bit to avoid the warnings and see what
+;; happens
+(setq lsp-file-watch-threshold 3000)
+
