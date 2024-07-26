@@ -18,71 +18,71 @@
   ;; Contexts for my different email accounts
   (setq mu4e-contexts
         `( ,(make-mu4e-context
-            :name "inria"
-            :match-func (lambda (msg)
-                          (when msg
-                            (mu4e-message-contact-field-matches msg
-                                                                '(:to :cc :bcc :from)
-                                                                "loic.esteve@inria.fr")))
-            :vars '((user-mail-address . "loic.esteve@inria.fr")
-                    (user-full-name . "Loïc Estève")
-                    (mu4e-sent-folder . "/inria/Sent")
-                    (mu4e-drafts-folder . "/inria/Drafts"))
-            :enter-func (lambda () (my-context-enter-func my-work-query my-work-folder-regex))
-            )
-          ,(make-mu4e-context
-            :name "ymail"
-            :match-func (lambda (msg)
-                          (when msg
-                            (mu4e-message-contact-field-matches msg
-                                                                '(:to :cc :bcc :from)
-                                                                "loic.esteve@ymail.com")))
-            :vars '((user-mail-address . "loic.esteve@ymail.com")
-                    (user-full-name . "Loïc Estève")
-                    (mu4e-sent-folder . "/ymail/Sent")
-                    (mu4e-drafts-folder . "/ymail/Draft"))
-            :enter-func (lambda () (my-context-enter-func my-work-query my-work-folder-regex))
-            )
-          ,(make-mu4e-context
-            :name "probabl"
-            :match-func (lambda (msg)
-                          (when msg
-                            (mu4e-message-contact-field-matches msg
-                                                                '(:to :cc :bcc :from)
-                                                                "loic@probabl.ai")))
-            :vars '((user-mail-address . "loic@probabl.ai")
-                    (user-full-name . "Loïc Estève")
-                    (mu4e-sent-folder . "/probabl/[Gmail]/Sent Mail")
-                    (mu4e-drafts-folder . "/probabl/[Gmail]/Drafts"))
-            :enter-func (lambda () (my-context-enter-func my-work-query my-work-folder-regex))
-            )
-          ,(make-mu4e-context
-            :name "gmx"
-            :match-func (lambda (msg)
-                          (when msg
-                            (mu4e-message-contact-field-matches msg
-                                                                '(:to :cc :bcc :from)
-                                                                "loic.esteve@gmx.com")))
-            :vars '((user-mail-address . "loic.esteve@gmx.com")
-                    (user-full-name . "Loïc Estève")
-                    (mu4e-sent-folder . "/gmx/Sent")
-                    (mu4e-drafts-folder . "/gmx/Drafts"))
-            :enter-func (lambda () (my-context-enter-func my-personal-query my-personal-folder-regex))
-            )
-          ,(make-mu4e-context
-            :name "outlook"
-            :match-func (lambda (msg)
-                          (when msg
-                            (mu4e-message-contact-field-matches msg
-                                                                '(:to :cc :bcc :from)
-                                                                "loic.esteve@outlook.com")))
-            :vars '((user-mail-address . "loic.esteve@outlook.com")
-                    (user-full-name . "Loïc Estève")
-                    (mu4e-sent-folder . "/outlook/Sent")
-                    (mu4e-drafts-folder . "/outlook/Drafts"))
-            :enter-func (lambda () (my-context-enter-func my-personal-query my-personal-folder-regex))
-            )
-          ))
+             :name "inria"
+             :match-func (lambda (msg)
+                           (when msg
+                             (mu4e-message-contact-field-matches msg
+                                                                 '(:to :cc :bcc :from)
+                                                                 "loic.esteve@inria.fr")))
+             :vars '((user-mail-address . "loic.esteve@inria.fr")
+                     (user-full-name . "Loïc Estève")
+                     (mu4e-sent-folder . "/inria/Sent")
+                     (mu4e-drafts-folder . "/inria/Drafts"))
+             :enter-func (lambda () (my-context-enter-func my-work-query my-work-folder-regex))
+             )
+           ,(make-mu4e-context
+             :name "ymail"
+             :match-func (lambda (msg)
+                           (when msg
+                             (mu4e-message-contact-field-matches msg
+                                                                 '(:to :cc :bcc :from)
+                                                                 "loic.esteve@ymail.com")))
+             :vars '((user-mail-address . "loic.esteve@ymail.com")
+                     (user-full-name . "Loïc Estève")
+                     (mu4e-sent-folder . "/ymail/Sent")
+                     (mu4e-drafts-folder . "/ymail/Draft"))
+             :enter-func (lambda () (my-context-enter-func my-work-query my-work-folder-regex))
+             )
+           ,(make-mu4e-context
+             :name "probabl"
+             :match-func (lambda (msg)
+                           (when msg
+                             (mu4e-message-contact-field-matches msg
+                                                                 '(:to :cc :bcc :from)
+                                                                 "loic@probabl.ai")))
+             :vars '((user-mail-address . "loic@probabl.ai")
+                     (user-full-name . "Loïc Estève")
+                     (mu4e-sent-folder . "/probabl/[Gmail]/Sent Mail")
+                     (mu4e-drafts-folder . "/probabl/[Gmail]/Drafts"))
+             :enter-func (lambda () (my-context-enter-func my-work-query my-work-folder-regex))
+             )
+           ,(make-mu4e-context
+             :name "gmx"
+             :match-func (lambda (msg)
+                           (when msg
+                             (mu4e-message-contact-field-matches msg
+                                                                 '(:to :cc :bcc :from)
+                                                                 "loic.esteve@gmx.com")))
+             :vars '((user-mail-address . "loic.esteve@gmx.com")
+                     (user-full-name . "Loïc Estève")
+                     (mu4e-sent-folder . "/gmx/Sent")
+                     (mu4e-drafts-folder . "/gmx/Drafts"))
+             :enter-func (lambda () (my-context-enter-func my-personal-query my-personal-folder-regex))
+             )
+           ,(make-mu4e-context
+             :name "outlook"
+             :match-func (lambda (msg)
+                           (when msg
+                             (mu4e-message-contact-field-matches msg
+                                                                 '(:to :cc :bcc :from)
+                                                                 "loic.esteve@outlook.com")))
+             :vars '((user-mail-address . "loic.esteve@outlook.com")
+                     (user-full-name . "Loïc Estève")
+                     (mu4e-sent-folder . "/outlook/Sent")
+                     (mu4e-drafts-folder . "/outlook/Drafts"))
+             :enter-func (lambda () (my-context-enter-func my-personal-query my-personal-folder-regex))
+             )
+           ))
 
   ;; do not ask for context when starting mu4e
   (setq mu4e-context-policy 'pick-first)
@@ -119,20 +119,20 @@
   (setq my-default-mu4e-bookmarks
         `(("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
           (,(concat
-            "flag:unread AND NOT flag:trashed "
-            "AND (NOT flag:list OR list:sed-pro.inria.fr OR list:sierra.inria.fr)")
-          "Unread filtered messages" ?m)
+             "flag:unread AND NOT flag:trashed "
+             "AND (NOT flag:list OR list:sed-pro.inria.fr OR list:sierra.inria.fr)")
+           "Unread filtered messages" ?m)
           ("contact:notifications@github.com" "Github notifications" ?g)
           ("date:today..now" "Today's messages" ?t)
           ("date:7d..now" "Last 7 days" ?w)
           ("mime:image/*" "Messages with images" ?p)
           ("from:loic.esteve" "Sent" ?s)
           (,(mapconcat 'identity
-                      (mapcar
+                       (mapcar
                         (lambda (maildir)
                           (concat "maildir:" (car maildir)))
                         mu4e-maildir-shortcuts) " OR ")
-          "All inboxes" ?i)))
+           "All inboxes" ?i)))
 
   ;;; Avoid "Maildir error: duplicate UID" errors with mbsync
   (setq mu4e-change-filenames-when-moving t)
@@ -163,18 +163,22 @@
   (defun my-mu4e-delete-thread ()
     (interactive)
     (mu4e-headers-mark-thread nil '(delete))
-  )
+    )
 
-  ;; quick update shortcut to only fetch update from all my INBOX mailboxes
+  ;; quick update shortcut to only fetch update from one inbox
   ;; (useful when getting a verification code by email that is valid for a
   ;; short time)
   (defun my-mu4e-quick-update ()
     (interactive)
-    (let (
-          (mu4e-get-mail-command "mbsync inria:INBOX outlook:INBOX gmx:INBOX ymail:INBOX ymail:Bulk probabl:INBOX"))
-      (mu4e-update-mail-and-index nil)
-      )
-    )
+    (let ((choices '("gmx" "inria" "outlook" "probabl" "ymail")))
+      (helm :sources (helm-build-sync-source "Choose inbox"
+                       :candidates choices
+                       :action (lambda (choice)
+                                 (let (
+                                       (mu4e-get-mail-command (concat "mbsync " choice)))
+                                   (mu4e-update-mail-and-index nil))))
+
+            :buffer "*helm select inbox action*")))
 
   ;; In an ideal world I would do it by setting spacemacs-evil layer variables as
   ;; shown in
@@ -228,7 +232,7 @@
     (kbd "C-S-p") 'my-mu4e-quick-update
     )
 
-)
+  )
 
 ;; HTML support
 (use-package mu4e-contrib
@@ -264,4 +268,3 @@
   )
 
 (spacemacs/set-leader-keys "aer" 'my-mu4e-restart)
-
