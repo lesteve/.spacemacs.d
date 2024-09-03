@@ -234,12 +234,6 @@
 
   )
 
-(evil-collection-define-key 'normal 'mu4e-main-mode-map
-  "p" 'my-mu4e-quick-update
-  (kbd "C-S-p") 'my-mu4e-quick-update
-  )
-
-
 ;; Disable mu4e shortcut to reduce distraction
 (defun my-mu4e-noop()
   (interactive)
