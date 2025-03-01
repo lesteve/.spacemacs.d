@@ -6,7 +6,6 @@
 (with-eval-after-load 'org
 
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-
   (setq org-support-shift-select t)
   (setq org-special-ctrl-k t)
   ;; use ido completion inside org
@@ -212,7 +211,6 @@ Taken from https://stackoverflow.com/a/24643887"
 
   ;; org-pomodoro settings
   (use-package org-pomodoro
-    :defer t
     :init
     (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil))))
     (setq org-pomodoro-play-sounds nil)
@@ -274,7 +272,7 @@ Taken from https://stackoverflow.com/a/24643887"
   (defun my-khal-sync ()
     (khalel-run-vdirsyncer)
     (khalel-import-events)
-  )
+    )
   (run-with-idle-timer 300 t 'my-khal-sync)
 
-)
+  )
