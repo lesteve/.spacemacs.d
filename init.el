@@ -69,7 +69,7 @@ This function should only modify configuration layer settings."
              python-test-runner 'pytest
              python-backend 'lsp
              python-lsp-server 'pyright
-             python-formatter 'black)
+             python-formatter 'ruff)
      (mu4e :variables
            mu4e-installation-path "/usr/local/share/emacs/site-lisp/mu4e")
      ess
