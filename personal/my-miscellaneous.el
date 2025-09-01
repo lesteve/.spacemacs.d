@@ -9,11 +9,11 @@
 ;; (i.e. visual-fill-column never gets turned off)
 (require 'visual-fill-column)
 (defun my-visual-fill-column-mode ()
-    (if visual-fill-column-mode
-        (progn (setq visual-fill-column-width nil)
-               (visual-fill-column-mode 0))
-      (progn (setq visual-fill-column-width 120)
-             (visual-fill-column-mode 1))))
+  (if visual-fill-column-mode
+      (progn (setq visual-fill-column-width nil)
+             (visual-fill-column-mode 0))
+    (progn (setq visual-fill-column-width 120)
+           (visual-fill-column-mode 1))))
 
 (setq visual-line-mode-hook #'my-visual-fill-column-mode)
 
@@ -55,12 +55,12 @@
            (sort
             ;; the pattern excludes lock files which starts with .#
             ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Locks.html#File-Locks
-              (directory-files-and-attributes "~/org" t "^[^.][^#].*\.org")
-              #'(lambda (x y) (not (time-less-p (nth 6 x) (nth 6 y))))
-              )
+            (directory-files-and-attributes "~/org" t "^[^.][^#].*\.org")
+            #'(lambda (x y) (not (time-less-p (nth 6 x) (nth 6 y))))
+            )
            )
    )
-)
+  )
 (spacemacs/set-leader-keys "ao/" 'my-helm-org-rifle)
 
 ;; Set yasnippets folder
@@ -76,20 +76,20 @@
 ;; Calendar holidays
 (setq holiday-french-holidays
       `((holiday-fixed 1 1 "New Year's day")
-	(holiday-fixed 5 1 "Labour day")
-	(holiday-fixed 5 8 "Victory in Europe day")
-	(holiday-fixed 7 14 "Bastille day")
-	(holiday-fixed 8 15 "Assumption")
-	(holiday-fixed 11 1 "All Saint's day")
-	(holiday-fixed 11 11 "Armistice day")
-	(holiday-fixed 12 25 "Christmas")
-  ; variable holidays
-	(holiday-easter-etc 0 "Easter")
+        (holiday-fixed 5 1 "Labour day")
+        (holiday-fixed 5 8 "Victory in Europe day")
+        (holiday-fixed 7 14 "Bastille day")
+        (holiday-fixed 8 15 "Assumption")
+        (holiday-fixed 11 1 "All Saint's day")
+        (holiday-fixed 11 11 "Armistice day")
+        (holiday-fixed 12 25 "Christmas")
+                                        ; variable holidays
+        (holiday-easter-etc 0 "Easter")
         (holiday-easter-etc 1 "Easter Monday")
         (holiday-easter-etc 39 "Ascension day")
         (holiday-easter-etc 49 "Pentecost")
         (holiday-easter-etc 50 "Whit Monday")
-	))
+        ))
 
 (setq calendar-holidays holiday-french-holidays)
 
@@ -135,3 +135,9 @@ The only difference is to use '(t nil) instead of t to discard stderr.
   )
 (spacemacs/set-leader-keys "bt" 'my-todo-switch)
 (spacemacs/set-leader-keys "bj" 'my-todo-headings-switch)
+
+;; Colorize logs with ANSI escape characters
+(defun my-ansi-color-buffer ()
+  (interactive)
+  (ansi-color-apply-on-region (point-min) (point-max))
+  )
