@@ -78,6 +78,7 @@ This function should only modify configuration layer settings."
      pass
      dtrt-indent
      react
+     bm
      )
 
    ;; List of additional packages that will be installed without being wrapped
