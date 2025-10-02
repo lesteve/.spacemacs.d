@@ -96,8 +96,7 @@
           ("j" "Journal" entry (file+olp+datetree my-org-journal-file)
            "* %?\nEntered on %U\n  %i\n  %a")
           ("w" "Webpage" entry (file+headline "~/org/refile.org" "Webpages")
-           "* %:description\nEntered on %U\nSource: %:link\n\n%:initial%? %(progn (my-focus-emacs-window) \"\")")
-          ("d" "From calfw" entry (file "~/org/zimbra-private.org")  "* %? \n%(cfw:org-capture-day)" :append t)))
+           "* %:description\nEntered on %U\nSource: %:link\n\n%:initial%? %(progn (my-focus-emacs-window) \"\")")))
 
   ;; to make a TODO item dependent of its subtrees items
   (setq org-enforce-todo-dependencies t)
