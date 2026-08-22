@@ -4,7 +4,7 @@
   ;;; Set up some common mu4e variables
   (setq mu4e-trash-folder "/Trash"
         mu4e-refile-folder "/Archive"
-        mu4e-get-mail-command "mbsync -a"
+        mu4e-get-mail-command (expand-file-name "~/scripts/update-email.sh")
         mu4e-update-interval nil
         mu4e-compose-signature-auto-include nil
         mu4e-view-show-images t
