@@ -79,6 +79,7 @@ This function should only modify configuration layer settings."
      dtrt-indent
      react
      bm
+     windows-scripts
      )
 
    ;; List of additional packages that will be installed without being wrapped
