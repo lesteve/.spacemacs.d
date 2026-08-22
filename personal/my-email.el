@@ -236,6 +236,17 @@
   (set-face-attribute 'mu4e-unread-face nil :weight 'medium)
   ;; some themes use mu4e-headers-face for headers; ensure it isn't bold
   ;; (set-face-attribute 'mu4e-header-highlight nil :weight 'normal)
+
+  (require 'mu4e-icalendar)
+  (require 'gnus-icalendar)
+  (gnus-icalendar-setup)
+  (setq gnus-icalendar-additional-identities
+        '("loic.esteve@inria.fr"
+          "loic.esteve@ymail.com"
+          "loic@probabl.ai"
+          "loic.esteve@gmx.com"
+          "loic.esteve@outlook.com"
+          ))
   )
 
 ;; Disable mu4e shortcut to reduce distraction
