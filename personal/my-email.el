@@ -232,6 +232,10 @@
     (kbd "C-S-p") 'my-mu4e-quick-update
     )
 
+  ;; remove bold for unread messages
+  (set-face-attribute 'mu4e-unread-face nil :weight 'medium)
+  ;; some themes use mu4e-headers-face for headers; ensure it isn't bold
+  ;; (set-face-attribute 'mu4e-header-highlight nil :weight 'normal)
   )
 
 ;; Disable mu4e shortcut to reduce distraction
