@@ -237,22 +237,22 @@ Taken from https://stackoverflow.com/a/24643887"
   (require 'calfw)
   (require 'calfw-org)
 
-  (spacemacs/set-leader-keys "aoCd" 'cfw:open-org-calendar)
+  (spacemacs/set-leader-keys "aoCd" 'calfw-org-open-calendar)
 
   ;; auto-evilification removes useful vim-like shortcuts
-  (define-key cfw:calendar-mode-map (kbd "SPC") 'spacemacs-cmds)
-  (define-key cfw:calendar-mode-map (kbd "TAB") 'cfw:show-details-command)
-  (define-key cfw:calendar-mode-map (kbd "C-j") 'cfw:navi-next-item-command)
-  (define-key cfw:calendar-mode-map (kbd "C-k") 'cfw:navi-prev-item-command)
-  (define-key cfw:org-schedule-map (kbd "SPC") 'spacemacs-cmds)
-  (define-key cfw:org-schedule-map (kbd "TAB") 'cfw:org-open-agenda-day)
-  (define-key cfw:org-custom-map (kbd "SPC") 'spacemacs-cmds)
-  (define-key cfw:org-custom-map (kbd "TAB") 'cfw:org-open-agenda-day)
+  (define-key calfw-calendar-mode-map (kbd "SPC") 'spacemacs-cmds)
+  (define-key calfw-calendar-mode-map (kbd "TAB") 'calfw-show-details-command)
+  (define-key calfw-calendar-mode-map (kbd "C-j") 'calfw-navi-next-item-command)
+  (define-key calfw-calendar-mode-map (kbd "C-k") 'calfw-navi-prev-item-command)
+  (define-key calfw-org-schedule-map (kbd "SPC") 'spacemacs-cmds)
+  (define-key calfw-org-schedule-map (kbd "TAB") 'calfw-org-open-agenda-day)
+  (define-key calfw-org-custom-map (kbd "SPC") 'spacemacs-cmds)
+  (define-key calfw-org-custom-map (kbd "TAB") 'calfw-org-open-agenda-day)
 
   ;; org template to use for capture from calfw note the real info is in
   ;; org-template. It seems you only need to say the template key (i.e. "d" in
   ;; this case)
-  (setq cfw:org-capture-template '("d" "" entry (file nil)  ""))
+  (setq calfw-org-capture-template '("d" "" entry (file nil)  ""))
 
   ;; use flameshot for capturing screenshot from org
   (setq org-download-screenshot-method "flameshot gui --raw > %s")
