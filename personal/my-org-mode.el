@@ -248,6 +248,12 @@ Taken from https://stackoverflow.com/a/24643887"
   (define-key calfw-org-schedule-map (kbd "TAB") 'calfw-org-open-agenda-day)
   (define-key calfw-org-custom-map (kbd "SPC") 'spacemacs-cmds)
   (define-key calfw-org-custom-map (kbd "TAB") 'calfw-org-open-agenda-day)
+  ;; for some reason you need to use evil-define-key for these shortcuts ...
+  (evil-define-key 'normal calfw-calendar-mode-map
+    (kbd "]") #'calfw-navi-next-month-command
+    (kbd "[") #'calfw-navi-previous-month-command
+    (kbd ">") #'calfw-navi-next-month-command
+    (kbd "<") #'calfw-navi-previous-month-command)
 
   ;; org template to use for capture from calfw note the real info is in
   ;; org-template. It seems you only need to say the template key (i.e. "d" in
