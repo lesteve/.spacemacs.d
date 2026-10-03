@@ -4,6 +4,10 @@
 ;; Add current function to the spaceline
 (add-hook 'python-mode-hook #'which-function-mode)
 
+;; flycheck tweaks
+(require 'flycheck)
+(setq flycheck-annotate-other-lines-style nil)
+
 (defvar-local flycheck-local-checkers nil)
 (defun +flycheck-checker-get(fn checker property)
   (or (alist-get property (alist-get checker flycheck-local-checkers))
