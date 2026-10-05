@@ -3,7 +3,9 @@
 ;; Only configure org after org has been loaded. See
 ;; http://spacemacs.org/layers/+emacs/org/README.html#important-note for more
 ;; details.
-(with-eval-after-load 'org
+(use-package org
+  :defer t
+  :config
 
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
   (setq org-support-shift-select t)
@@ -18,32 +20,6 @@
 
   ;; diary functionalities (eg holidays show up in agenda)
   (setq org-agenda-include-diary t)
-
-  (defun my-org-agenda-to-appt ()
-    (interactive)
-    ;; Make sure to refresh appt to avoid getting notifications about items
-    ;; whose time has changed or which have been unscheduled
-    (org-agenda-to-appt t))
-  ;; appt functionalities (appointment reminder)
-  (run-at-time nil 300 'my-org-agenda-to-appt)
-  (appt-activate t)
-
-  ;; 10 and 0 minutes remaining warnings
-  (setq appt-message-warning-time 10)
-  (setq appt-display-interval 10)
-
-  ;; Update appt each time agenda opened.
-  (add-hook 'org-finalize-agenda-hook 'my-org-agenda-to-appt)
-
-  ;; This is for custom appt notifications
-  (setq appt-display-format 'window)
-  (setq appt-disp-window-function (function my-appt-disp-window))
-
-
-  (defun my-appt-disp-window (min-to-app new-time msg)
-    (save-window-excursion (shell-command (concat
-                                           "notify-send 'Appointment' '"
-                                           msg " (" min-to-app " minutes left)' -t 30000") nil nil)))
 
   ;; to make mailto link work properly at the moment 18/06/2010
   ;; browse-url is default and does not work for some reason maybe
@@ -133,28 +109,8 @@
                                        ("DEFERRED" :foreground "forest green" :weight bold)
                                        ("PROJECT" :foreground "red" :weight bold))))
 
-  ;; Encryption of tags crypt (e.g. for saving passwords and stuff)
-  (require 'org-crypt)
-  ;; Encrypt all entries before saving
-  (org-crypt-use-before-save-magic)
-  (setq org-tags-exclude-from-inheritance (quote ("crypt")))
-  ;; Use my GPG key
-  (setq org-crypt-key "loic.esteve@inria.fr")
-  ;; Disable auto-save in buffer when using org-decrypt
-  (setq org-crypt-disable-auto-save t)
-
-  ;; To save the clock history across Emacs sessions
-  (setq org-clock-persist 'history)
-  (org-clock-persistence-insinuate)
-
   ;; To archive into a datetree into my journal file
   (setq org-archive-location (format "%s::datetree/" my-org-journal-file))
-
-  ;; org export for reveal.js presentations
-  (require 'org-re-reveal)
-
-  ;; org-protocol for capturing from firefox
-  (require 'org-protocol)
 
   ;; Make windmove work in org-mode:
   (add-hook 'org-shiftup-final-hook 'windmove-up)
@@ -185,60 +141,138 @@
   ;; https://github.com/syl20bnr/spacemacs/issues/13465#issuecomment-620684283
   (setq org-src-tab-acts-natively nil)
 
-  ;; org-capture in full frame from capturing from anywhere
-  (require 'noflet)
+  ;; use flameshot for capturing screenshot from org
+  (setq org-download-screenshot-method "flameshot gui --raw > %s")
 
-  (defun my-org-capture-in-new-full-frame ()
-    "Create a new frame and run org-capture in full frame (i.e. no splitting).
+
+  )
+
+;; Keep background services tied to Org loading, independently of calendar UI.
+(defvar my-org-appt-timer nil "Timer refreshing Org appointment reminders.")
+(defvar my-khal-sync-timer nil "Timer synchronizing calendars while idle.")
+
+(use-package appt
+  :after org
+  :demand t
+  :config
+  (defun my-org-agenda-to-appt ()
+    (interactive)
+    ;; Make sure to refresh appt to avoid getting notifications about items
+    ;; whose time has changed or which have been unscheduled
+    (org-agenda-to-appt t))
+  ;; appt functionalities (appointment reminder)
+  (when (timerp my-org-appt-timer)
+    (cancel-timer my-org-appt-timer))
+  (setq my-org-appt-timer
+        (run-at-time nil 300 #'my-org-agenda-to-appt))
+  (appt-activate t)
+
+  ;; 10 and 0 minutes remaining warnings
+  (setq appt-message-warning-time 10)
+  (setq appt-display-interval 10)
+
+  ;; Update appt each time agenda opened.
+  (add-hook 'org-finalize-agenda-hook 'my-org-agenda-to-appt)
+
+  ;; This is for custom appt notifications
+  (setq appt-display-format 'window)
+  (setq appt-disp-window-function (function my-appt-disp-window))
+
+
+  (defun my-appt-disp-window (min-to-app new-time msg)
+    (save-window-excursion (shell-command (concat
+                                           "notify-send 'Appointment' '"
+                                           msg " (" min-to-app " minutes left)' -t 30000") nil nil))))
+
+(use-package org-crypt
+  :after org
+  :demand t
+  :config
+  ;; Encryption of tags crypt (e.g. for saving passwords and stuff)
+  ;; Encrypt all entries before saving
+  (org-crypt-use-before-save-magic)
+  (setq org-tags-exclude-from-inheritance (quote ("crypt")))
+  ;; Use my GPG key
+  (setq org-crypt-key "loic.esteve@inria.fr")
+  ;; Disable auto-save in buffer when using org-decrypt
+  (setq org-crypt-disable-auto-save t))
+
+(use-package org-clock
+  :after org
+  :demand t
+  :config
+  (setq org-clock-persist 'history)
+  (org-clock-persistence-insinuate))
+
+;; The Org layer already loads org-re-reveal when reveal support is enabled.
+;; Keep that layer-owned export setup; no extra eager require is needed here.
+
+;; Autoload Org's server advice so protocol capture works before opening Org.
+;; org-protocol installs this same named advice when it loads (Org 9.8).
+(use-package org-protocol
+  :commands org--protocol-detect-protocol-server
+  :init
+  (advice-add 'server-visit-files :around #'org--protocol-detect-protocol-server))
+
+(require 'cl-lib)
+;; org-capture in full frame from capturing from anywhere
+
+(defun my-org-capture-in-new-full-frame ()
+  "Create a new frame and run org-capture in full frame (i.e. no splitting).
 Taken from https://stackoverflow.com/a/24643887"
 
-    (interactive)
-    (add-hook 'org-capture-after-finalize-hook 'my-org-capture-after-finalize-hook)
-    (make-frame '((name . "capture")))
-    (select-frame-by-name "capture")
-    (delete-other-windows)
-    (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
-      (org-capture)))
+  (interactive)
+  (require 'org-capture)
+  (add-hook 'org-capture-after-finalize-hook 'my-org-capture-after-finalize-hook)
+  (make-frame '((name . "capture")))
+  (select-frame-by-name "capture")
+  (delete-other-windows)
+  (cl-letf (((symbol-function 'switch-to-buffer-other-window)
+             (lambda (buf &rest _args) (switch-to-buffer buf))))
+    (org-capture)))
 
-  (defun my-org-capture-after-finalize-hook ()
-    ;; Delete the frame after capture has been done
-    (delete-frame)
-    ;; Remove myself (i.e. the function currently executed) from the hook so that
-    ;; delete-frame is only called after this capture session
-    (remove-hook 'org-capture-after-finalize-hook 'my-org-capture-after-finalize-hook)
-    )
+(defun my-org-capture-after-finalize-hook ()
+  ;; Delete the frame after capture has been done
+  (delete-frame)
+  ;; Remove myself (i.e. the function currently executed) from the hook so that
+  ;; delete-frame is only called after this capture session
+  (remove-hook 'org-capture-after-finalize-hook 'my-org-capture-after-finalize-hook)
+  )
 
-  ;; org-pomodoro settings
-  (use-package org-pomodoro
-    :init
-    (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil))))
-    (setq org-pomodoro-play-sounds nil)
-    ;; Uncomment this for quicker testing
-    ;; (setq
-    ;;  org-pomodoro-length 1
-    ;;  org-pomodoro-short-break-length 1)
-    )
 
-  (defun my-org-pomodoro-info ()
-    "Return info about pomodoro state. Adapted from https://colekillian.com/posts/org-pomodoro-and-polybar/"
-    (if (org-pomodoro-active-p)
-        (cl-case org-pomodoro-state
-          (:pomodoro
-           (format "%s: %d minutes" org-clock-heading (/ (org-pomodoro-remaining-seconds) 60)))
-          (:short-break
-           (format "Short break: %d minutes" (/ (org-pomodoro-remaining-seconds) 60)))
-          (:long-break
-           (format "Long break: %d minutes" (/ (org-pomodoro-remaining-seconds) 60)))
-          (:overtime
-           (format "Overtime! %d minutes" (/ (org-pomodoro-remaining-seconds) 60))))
-      ""))
+;; org-pomodoro settings
+(use-package org-pomodoro
+  :commands org-pomodoro
+  :config
+  (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil))))
+  (setq org-pomodoro-play-sounds nil)
+  ;; Uncomment this for quicker testing
+  ;; (setq
+  ;;  org-pomodoro-length 1
+  ;;  org-pomodoro-short-break-length 1)
+  )
 
+(defun my-org-pomodoro-info ()
+  "Return info about pomodoro state. Adapted from https://colekillian.com/posts/org-pomodoro-and-polybar/"
+  (if (and (featurep 'org-pomodoro) (org-pomodoro-active-p))
+      (cl-case org-pomodoro-state
+        (:pomodoro
+         (format "%s: %d minutes" org-clock-heading (/ (org-pomodoro-remaining-seconds) 60)))
+        (:short-break
+         (format "Short break: %d minutes" (/ (org-pomodoro-remaining-seconds) 60)))
+        (:long-break
+         (format "Long break: %d minutes" (/ (org-pomodoro-remaining-seconds) 60)))
+        (:overtime
+         (format "Overtime! %d minutes" (/ (org-pomodoro-remaining-seconds) 60))))
+    ""))
+
+
+(use-package calfw-org
+  :commands calfw-org-open-calendar
+  :init
+  (spacemacs/set-leader-keys "aoCd" #'calfw-org-open-calendar)
+  :config
   ;; calfw for visual calendar inside emacs
-  (require 'calfw)
-  (require 'calfw-org)
-
-  (spacemacs/set-leader-keys "aoCd" 'calfw-org-open-calendar)
-
   ;; auto-evilification removes useful vim-like shortcuts
   (define-key calfw-calendar-mode-map (kbd "SPC") 'spacemacs-cmds)
   (define-key calfw-calendar-mode-map (kbd "TAB") 'calfw-show-details-command)
@@ -258,13 +292,13 @@ Taken from https://stackoverflow.com/a/24643887"
   ;; org template to use for capture from calfw note the real info is in
   ;; org-template. It seems you only need to say the template key (i.e. "d" in
   ;; this case)
-  (setq calfw-org-capture-template '("d" "" entry (file nil)  ""))
+  (setq calfw-org-capture-template '("d" "" entry (file nil)  "")))
 
-  ;; use flameshot for capturing screenshot from org
-  (setq org-download-screenshot-method "flameshot gui --raw > %s")
-
+(use-package khalel
+  :after org
+  :demand t
+  :config
   ;; khal/vdirsyncer setup
-  (require 'khalel)
   (setq khalel-khal-command (expand-file-name "~/micromamba/envs/khal/bin/khal"))
   (setq khalel-vdirsyncer-command "~/micromamba/envs/khal/bin/vdirsyncer")
   (setq khalel-import-org-file (concat org-directory "/" "khal-calendar.org"))
@@ -278,6 +312,7 @@ Taken from https://stackoverflow.com/a/24643887"
     (khalel-run-vdirsyncer)
     (khalel-import-events)
     )
-  (run-with-idle-timer 300 t 'my-khal-sync)
-
-  )
+  (when (timerp my-khal-sync-timer)
+    (cancel-timer my-khal-sync-timer))
+  (setq my-khal-sync-timer
+        (run-with-idle-timer 300 t #'my-khal-sync)))

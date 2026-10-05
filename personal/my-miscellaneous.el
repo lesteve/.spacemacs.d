@@ -4,32 +4,33 @@
 ;; Default fill column, used e.g. by M-q
 (setq-default fill-column 79)
 
-;; Wrap lines to fill-column in visual-mode (useful e.g. when reading emails in
-;; mu4e). For some reason just using visual-fill-column-mode does not work
-;; (i.e. visual-fill-column never gets turned off)
-(require 'visual-fill-column)
+;; Keep wrapping at 120 columns in sync with visual-line-mode (e.g. in mu4e).
 (defun my-visual-fill-column-mode ()
-  (if visual-fill-column-mode
-      (progn (setq visual-fill-column-width nil)
-             (visual-fill-column-mode 0))
-    (progn (setq visual-fill-column-width 120)
-           (visual-fill-column-mode 1))))
+  "Match visual-fill-column to visual-line-mode in the current buffer."
+  (setq-local visual-fill-column-width (when visual-line-mode 120))
+  (visual-fill-column-mode (if visual-line-mode 1 -1)))
 
-(setq visual-line-mode-hook #'my-visual-fill-column-mode)
+(use-package visual-fill-column
+  :commands visual-fill-column-mode
+  :init
+  (add-hook 'visual-line-mode-hook #'my-visual-fill-column-mode))
 
 ;; Disable mouse globally
-(require 'disable-mouse)
-(global-disable-mouse-mode)
-;; Need this to disable mouse in evil-mode. It just happens too often that I
-;; touch the touchpad while typing, which causes to insert text somewhere I
-;; don't want. Taken from https://github.com/purcell/disable-mouse/issues/1#issuecomment-449902949
-(mapc #'disable-mouse-in-keymap
-      (list evil-motion-state-map
-            evil-normal-state-map
-            evil-visual-state-map
-            evil-insert-state-map))
-;; Not sure why but I need this on top ...
-(evil-define-key 'normal 'custom-mode-map [down-mouse-1] 'disable-mouse--handle)
+(use-package disable-mouse
+  :demand t
+  :config
+  (global-disable-mouse-mode 1)
+  ;; Need this to disable mouse in evil-mode. It just happens too often that I
+  ;; touch the touchpad while typing, which causes to insert text somewhere I
+  ;; don't want. Taken from https://github.com/purcell/disable-mouse/issues/1#issuecomment-449902949
+  (with-eval-after-load 'evil
+    (mapc #'disable-mouse-in-keymap
+          (list evil-motion-state-map
+                evil-normal-state-map
+                evil-visual-state-map
+                evil-insert-state-map))
+    ;; Not sure why but I need this on top ...
+    (evil-define-key 'normal custom-mode-map [down-mouse-1] 'disable-mouse--handle)))
 
 ;; (define-key evil-motion-state-map [down-mouse-1] 'silence)
 ;; (define-key evil-motion-state-map [mouse-1] 'silence)
@@ -40,10 +41,6 @@
 ;; of each other. This is useful for magit status or org-agenda.
 (setq split-height-threshold nil)
 (setq split-width-threshold 20)
-
-;; Keep C-i different than TAB when using emacs GUI. This is useful to use C-i
-;; for evil-jump-forward i.e. move forward in the Jump List
-(setq dotspacemacs-distinguish-gui-tab t)
 
 ;; Custom shortcut to use org-rifle on my org files with latest modified files
 ;; first. This is more useful than the default SPC a o / which only use opened
@@ -62,9 +59,6 @@
    )
   )
 (spacemacs/set-leader-keys "ao/" 'my-helm-org-rifle)
-
-;; Set yasnippets folder
-(setq auto-completion-private-snippets-directory "~/.spacemacs.d/snippets")
 
 ;; Set prompt regexp for d d to work in vterm (otherwise it tries to delete the
 ;; prompt and errors with Buffer is read-only)
@@ -115,7 +109,7 @@ The only difference is to use '(t nil) instead of t to discard stderr.
 ;; Useful for khalel that has buffer-read-only at the beginning of the imported
 ;; org file. This is here rather than in my-org-mode.el because my-org-mode.el
 ;; is only loaded after org is loaded.
-(push (cons 'buffer-read-only '1) safe-local-variable-values)
+(add-to-list 'safe-local-variable-values '(buffer-read-only . 1))
 
 ;; Easy switch to todo.org headline. I put it here so that it is accessible
 ;; even if I have not opened any org file yet
@@ -139,5 +133,6 @@ The only difference is to use '(t nil) instead of t to discard stderr.
 ;; Colorize logs with ANSI escape characters
 (defun my-ansi-color-buffer ()
   (interactive)
+  (require 'ansi-color)
   (ansi-color-apply-on-region (point-min) (point-max))
   )

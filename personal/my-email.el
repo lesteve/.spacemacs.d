@@ -237,8 +237,13 @@
   ;; some themes use mu4e-headers-face for headers; ensure it isn't bold
   ;; (set-face-attribute 'mu4e-header-highlight nil :weight 'normal)
 
-  (require 'mu4e-icalendar)
-  (require 'gnus-icalendar)
+  )
+
+;; mu4e-icalendar itself requires gnus-icalendar before this setup runs.
+(use-package mu4e-icalendar
+  :after mu4e
+  :demand t
+  :config
   (gnus-icalendar-setup)
   (setq gnus-icalendar-additional-identities
         '("loic.esteve@inria.fr"
@@ -256,17 +261,17 @@
   )
 (spacemacs/set-leader-keys "aem" 'my-mu4e-noop)
 
-;; HTML support
-(use-package mu4e-contrib
+;; HTML rendering uses SHR directly in current mu4e versions.
+(use-package shr
   :defer t
-  :after mu4e
-  :init
-  (setq mu4e-html2text-command 'mu4e-shr2text)
+  :config
   (setq shr-color-visible-luminance-min 60)
   (setq shr-color-visible-distance-min 5)
   (setq shr-use-colors nil)
-  (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
-  )
+  (defun shr-no-colourise-region (&rest _args)
+    "Suppress HTML foreground and background colors."
+    nil)
+  (advice-add #'shr-colorize-region :around #'shr-no-colourise-region))
 
 ;; Sometimes, not sure when, I get the following error
 ;; error in process filter: Error 111: failed to open store @ /home/lesteve/.cache/mu/xapian: Unable to get write lock on /home/lesteve/.cache/mu/xapian: already locked

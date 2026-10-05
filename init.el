@@ -38,7 +38,8 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-private-snippets-directory "~/.spacemacs.d/snippets")
      better-defaults
      emacs-lisp
      (git :variables
@@ -297,7 +298,7 @@ It should only modify the values of Spacemacs settings."
    ;; and TAB or `C-m' and `RET'.
    ;; In the terminal, these pairs are generally indistinguishable, so this only
    ;; works in the GUI. (default nil)
-   dotspacemacs-distinguish-gui-tab nil
+   dotspacemacs-distinguish-gui-tab t
 
    ;; Name of the default layout (default "Default")
    dotspacemacs-default-layout-name "Default"
