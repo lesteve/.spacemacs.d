@@ -136,3 +136,15 @@ The only difference is to use '(t nil) instead of t to discard stderr.
   (require 'ansi-color)
   (ansi-color-apply-on-region (point-min) (point-max))
   )
+
+;; Restore the configured point size after an XSETTINGS DPI change.
+;; Otherwise Emacs can retain the old pixel size when switching monitors.
+(defun my/reapply-font-after-dpi-change (event)
+  "Reapply the Spacemacs font after a font-render settings EVENT."
+  (when (eq (nth 1 event) 'font-render)
+    (clear-font-cache)
+    (spacemacs/set-default-font dotspacemacs-default-font)))
+
+(with-eval-after-load 'dynamic-setting
+  (advice-add 'dynamic-setting-handle-config-changed-event
+              :after #'my/reapply-font-after-dpi-change))
